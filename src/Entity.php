@@ -26,16 +26,34 @@ final class Entity
         array $classes,
         array $properties
     ) {
-        $this->classes = $classes;
+        $this->classes = array_unique($classes);
         $this->properties = $properties;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getClasses() : array
+    {
+        return $this->classes;
+    }
+
+    public function hasClass(string $name) : bool
+    {
+        return in_array($name, $this->classes);
     }
 
     public function toArray() : array
     {
-        return [
-            'class'      => $this->classes,
-            'properties' => $this->properties,
-        ];
+        $result = [];
+
+        $result['class'] = $this->classes;
+
+        if (count($this->properties)) {
+            $result['properties'] = $this->properties;
+        }
+
+        return $result;
     }
 
     public function __toString() : string
