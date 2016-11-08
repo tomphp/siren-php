@@ -3,6 +3,7 @@
 namespace TomPHP\Siren;
 
 use Assert\Assertion;
+use TomPHP\Siren\Exception\NotFound;
 
 final class Entity
 {
@@ -54,7 +55,19 @@ final class Entity
 
     public function hasProperty(string $name) : bool
     {
-        return isset($this->properties[$name]);
+        return array_key_exists($name, $this->properties);
+    }
+
+    /**
+     * @throws NotFound
+     */
+    public function getProperty(string $name)
+    {
+        if (!$this->hasProperty($name)) {
+            throw NotFound::fromProperty($name);
+        }
+
+        return $this->properties[$name];
     }
 
     public function toArray() : array

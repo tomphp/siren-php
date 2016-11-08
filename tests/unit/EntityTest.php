@@ -3,6 +3,7 @@
 namespace tests\unit\TomPHP\Siren;
 
 use TomPHP\Siren\Entity;
+use TomPHP\Siren\Exception\NotFound;
 
 final class EntityTest extends \PHPUnit_Framework_TestCase
 {
@@ -74,6 +75,47 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         assertTrue($entity->hasProperty('example-property'));
+    }
+
+    /** @test */
+    public function on_hasProperty_it_returns_true_for_a_null_value_property()
+    {
+        $entity = Entity::builder()
+            ->addProperty('example-property', null)
+            ->build();
+
+        assertTrue($entity->hasProperty('example-property'));
+    }
+
+    /** @test */
+    public function on_getProperty_it_throws_an_exception_if_property_is_not_found()
+    {
+        $entity = Entity::builder()
+            ->build();
+
+        $this->expectException(NotFound::class);
+
+        $entity->getProperty('example-property');
+    }
+
+    /** @test */
+    public function on_getProperty_it_returns_the_property_value()
+    {
+        $entity = Entity::builder()
+            ->addProperty('example-property', 'property-value')
+            ->build();
+
+        assertSame('property-value', $entity->getProperty('example-property'));
+    }
+
+    /** @test */
+    public function on_getProperty_it_returns_a_null_value_property()
+    {
+        $entity = Entity::builder()
+            ->addProperty('example-property', null)
+            ->build();
+
+        assertNull($entity->getProperty('example-property'));
     }
 
     /** @test */

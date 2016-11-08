@@ -5,7 +5,8 @@
     "require": {
         "php": "^7.0",
         "friendsofphp/php-cs-fixer": "dev-master",
-        "beberlei/assert": "^2.6"
+        "beberlei/assert": "^2.6",
+        "tomphp/exception-constructor-tools": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.6"
