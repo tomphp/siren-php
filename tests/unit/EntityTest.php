@@ -48,7 +48,36 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_converts_to_an_array()
+    public function on_getProperties_it_returns_all_properties()
+    {
+        $entity = Entity::builder()
+            ->addProperties(['a' => 1, 'b' => 2])
+            ->build();
+
+        assertSame(['a' => 1, 'b' => 2], $entity->getProperties());
+    }
+
+    /** @test */
+    public function on_hasProperty_it_returns_false_if_the_property_is_not_present()
+    {
+        $entity = Entity::builder()
+            ->build();
+
+        assertFalse($entity->hasProperty('example-property'));
+    }
+
+    /** @test */
+    public function on_hasProperty_it_returns_true_if_the_property_is_present()
+    {
+        $entity = Entity::builder()
+            ->addProperty('example-property', 'some value')
+            ->build();
+
+        assertTrue($entity->hasProperty('example-property'));
+    }
+
+    /** @test */
+    public function on_toArray_it_converts_to_an_array()
     {
         $entity = Entity::builder()
             ->addClass('example-class')

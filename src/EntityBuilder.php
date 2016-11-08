@@ -29,7 +29,20 @@ final class EntityBuilder
      */
     public function addProperties(array $properties)
     {
-        $this->properties = $properties;
+        $this->properties = array_merge(
+            $this->properties,
+            $properties
+        );
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addProperty(string $name, $value)
+    {
+        $this->properties[$name] = $value;
 
         return $this;
     }

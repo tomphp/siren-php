@@ -43,6 +43,16 @@ final class Entity
         return in_array($name, $this->classes);
     }
 
+    public function getProperties() : array
+    {
+        return $this->properties;
+    }
+
+    public function hasProperty(string $name) : bool
+    {
+        return isset($this->properties[$name]);
+    }
+
     public function toArray() : array
     {
         $result = [];
