@@ -2,6 +2,8 @@
 
 namespace TomPHP\Siren;
 
+use Assert\Assertion;
+
 final class Entity
 {
     /**
@@ -26,6 +28,8 @@ final class Entity
         array $classes,
         array $properties
     ) {
+        Assertion::allString($classes);
+
         $this->classes = array_unique($classes);
         $this->properties = $properties;
     }
