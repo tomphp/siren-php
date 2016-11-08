@@ -119,6 +119,25 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_getPropertyOr_it_returns_the_default_if_property_is_not_found()
+    {
+        $entity = Entity::builder()
+            ->build();
+
+        assertSame('default-value', $entity->getPropertyOr('example-property', 'default-value'));
+    }
+
+    /** @test */
+    public function on_getPropertyOr_it_returns_the_property_value()
+    {
+        $entity = Entity::builder()
+            ->addProperty('example-property', 'property-value')
+            ->build();
+
+        assertSame('property-value', $entity->getPropertyOr('example-property', 'default-value'));
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array()
     {
         $entity = Entity::builder()

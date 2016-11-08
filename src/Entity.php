@@ -70,6 +70,15 @@ final class Entity
         return $this->properties[$name];
     }
 
+    public function getPropertyOr(string $name, $default)
+    {
+        if (!$this->hasProperty($name)) {
+            return $default;
+        }
+
+        return $this->properties[$name];
+    }
+
     public function toArray() : array
     {
         $result = [];
