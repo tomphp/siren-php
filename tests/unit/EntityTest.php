@@ -159,4 +159,18 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             $entity->toArray()
         );
     }
+
+    /** @test */
+    public function on_toJson_it_returns_a_json_string()
+    {
+        $entity = Entity::builder()
+            ->addClass('example-class')
+            ->addProperties([
+                'a' => 1,
+                'b' => 2,
+            ])
+            ->build();
+
+        assertSame(json_encode($entity->toArray()), $entity->toJson());
+    }
 }

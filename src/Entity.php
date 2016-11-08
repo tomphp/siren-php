@@ -92,8 +92,8 @@ final class Entity
         return $result;
     }
 
-    public function __toString() : string
+    public function toJson() : string
     {
-        return '';
+        return json_encode($this->toArray());
     }
 }
