@@ -2,6 +2,8 @@
 
 namespace TomPHP\Siren;
 
+use Assert\Assertion;
+
 final class EntityBuilder
 {
     /**
@@ -13,6 +15,11 @@ final class EntityBuilder
      * @var array
      */
     private $properties = [];
+
+    /**
+     * @var Link[]
+     */
+    private $links = [];
 
     /**
      * @return $this
@@ -47,8 +54,27 @@ final class EntityBuilder
         return $this;
     }
 
+    /**
+     * @param Link|string $linkOrRel
+     * @param string      $href
+     *
+     * @return $this
+     */
+    public function addLink($linkOrRel, string $href = null)
+    {
+        Assertion::string($linkOrRel);
+
+        $this->links[] = new Link($linkOrRel, $href);
+
+        return $this;
+    }
+
     public function build() : Entity
     {
-        return new Entity($this->classes, $this->properties);
+        return new Entity(
+            $this->classes,
+            $this->properties,
+            $this->links
+        );
     }
 }

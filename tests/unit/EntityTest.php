@@ -138,6 +138,26 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_hasLink_it_returns_false_if_a_link_with_the_rel_is_not_present()
+    {
+        $entity = Entity::builder()
+            ->addLink('previous', 'http://api.com/previous')
+            ->build();
+
+        assertFalse($entity->hasLink('next'));
+    }
+
+    /** @test */
+    public function on_hasLink_it_returns_false_if_a_link_with_the_rel_is_present()
+    {
+        $entity = Entity::builder()
+            ->addLink('next', 'http://api.com/next')
+            ->build();
+
+        assertTrue($entity->hasLink('next'));
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array()
     {
         $entity = Entity::builder()

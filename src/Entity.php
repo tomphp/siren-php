@@ -17,6 +17,11 @@ final class Entity
      */
     private $properties;
 
+    /**
+     * @var Link[]
+     */
+    private $links;
+
     public static function builder() : EntityBuilder
     {
         return new EntityBuilder();
@@ -24,15 +29,20 @@ final class Entity
 
     /**
      * @param string[] $classes
+     * @param array    $properties
+     * @param Link[]   $links
      */
     public function __construct(
         array $classes,
-        array $properties
+        array $properties,
+        array $links
     ) {
         Assertion::allString($classes);
+        Assertion::allIsInstanceOf($links, Link::class);
 
         $this->classes = array_unique($classes);
         $this->properties = $properties;
+        $this->links = $links;
     }
 
     /**
@@ -77,6 +87,18 @@ final class Entity
         }
 
         return $this->properties[$name];
+    }
+
+    public function hasLink(string $rel) : bool
+    {
+        $rels = array_map(
+            function (Link $link) {
+                return $link->getRel();
+            },
+            $this->links
+        );
+
+        return in_array($rel, $rels);
     }
 
     public function toArray() : array
