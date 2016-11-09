@@ -57,14 +57,28 @@ final class EntityBuilder
     /**
      * @param Link|string|string[] $linkOrRel
      * @param string               $href
+     * @param string|string[]      $classes
+     * @param string               $title
+     * @param string               $type
      *
      * @return $this
      */
-    public function addLink($linkOrRel, string $href = null)
-    {
-        Assertion::string($linkOrRel);
+    public function addLink(
+        $linkOrRel,
+        string $href = null,
+        $classes = [],
+        string $title = null,
+        string $type = null
+    ) {
+        $link = $linkOrRel;
 
-        $this->links[] = new Link([$linkOrRel], $href);
+        if (!$linkOrRel instanceof Link) {
+            $rels    = is_array($linkOrRel) ? $linkOrRel : [$linkOrRel];
+            $classes = is_array($classes) ? $classes : [$classes];
+            $link    = new Link($rels, $href, $classes, $title, $type);
+        }
+
+        $this->links[] = $link;
 
         return $this;
     }
