@@ -20,20 +20,20 @@ final class NotFoundTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function on_fromProperty_it_sets_the_message()
+    public function on_forProperty_it_sets_the_message()
     {
         assertSame(
             'Property "some-property" was not found.',
-            NotFound::fromProperty('some-property')->getMessage()
+            NotFound::forProperty('some-property')->getMessage()
         );
     }
 
     /** @test */
-    public function on_fromProperty_it_sets_the_code()
+    public function on_forProperty_it_sets_the_code()
     {
         assertSame(
             NotFound::PROPERTY,
-            NotFound::fromProperty('some-property')->getCode()
+            NotFound::forProperty('some-property')->getCode()
         );
     }
 

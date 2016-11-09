@@ -74,7 +74,7 @@ final class Entity
     public function getProperty(string $name)
     {
         if (!$this->hasProperty($name)) {
-            throw NotFound::fromProperty($name);
+            throw NotFound::forProperty($name);
         }
 
         return $this->properties[$name];

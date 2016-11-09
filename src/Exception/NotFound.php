@@ -21,7 +21,7 @@ final class NotFound extends \RuntimeException implements Exception
      */
     const LINK_MESSAGE = 'Link "%s" was not found.';
 
-    public static function fromProperty(string $name) : self
+    public static function forProperty(string $name) : self
     {
         return self::create(self::PROPERTY_MESSAGE, [$name], self::PROPERTY);
     }
