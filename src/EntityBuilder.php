@@ -22,6 +22,11 @@ final class EntityBuilder
     private $links = [];
 
     /**
+     * @var string
+     */
+    private $title;
+
+    /**
      * @return $this
      */
     public function addClass(string $name)
@@ -50,6 +55,16 @@ final class EntityBuilder
     public function addProperty(string $name, $value)
     {
         $this->properties[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
 
         return $this;
     }
@@ -88,7 +103,8 @@ final class EntityBuilder
         return new Entity(
             $this->classes,
             $this->properties,
-            $this->links
+            $this->links,
+            $this->title
         );
     }
 }

@@ -225,6 +225,16 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_have_a_title()
+    {
+        $entity = Entity::builder()
+            ->setTitle('The Title')
+            ->build();
+
+        assertSame('The Title', $entity->getTitle());
+    }
+
+    /** @test */
     public function on_toJson_it_returns_a_json_string()
     {
         $entity = Entity::builder()

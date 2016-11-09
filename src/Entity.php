@@ -22,6 +22,11 @@ final class Entity
      */
     private $links;
 
+    /**
+     * @var string
+     */
+    private $title;
+
     public static function builder() : EntityBuilder
     {
         return new EntityBuilder();
@@ -31,11 +36,13 @@ final class Entity
      * @param string[] $classes
      * @param array    $properties
      * @param Link[]   $links
+     * @param string   $title
      */
     public function __construct(
         array $classes,
         array $properties,
-        array $links
+        array $links,
+        string $title = null
     ) {
         Assertion::allString($classes);
         Assertion::allIsInstanceOf($links, Link::class);
@@ -43,6 +50,7 @@ final class Entity
         $this->classes = array_unique($classes);
         $this->properties = $properties;
         $this->links = $links;
+        $this->title = $title;
     }
 
     /**
@@ -119,6 +127,11 @@ final class Entity
         }
 
         throw NotFound::forLink($rel);
+    }
+
+    public function getTitle() : string
+    {
+        return $this->title;
     }
 
     public function toArray() : array
