@@ -168,8 +168,8 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
 
         assertEquals(
             [
-                new Link('next', 'http://api.com/next'),
-                new Link('previous', 'http://api.com/previous'),
+                new Link(['next'], 'http://api.com/next'),
+                new Link(['previous'], 'http://api.com/previous'),
             ],
             $entity->getLinks()
         );
@@ -182,7 +182,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ->addLink('next', 'http://api.com/next')
             ->build();
 
-        assertEquals(new Link('next', 'http://api.com/next'), $entity->getLink('next'));
+        assertEquals(new Link(['next'], 'http://api.com/next'), $entity->getLink('next'));
     }
 
     /** @test */

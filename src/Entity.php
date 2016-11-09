@@ -91,11 +91,12 @@ final class Entity
 
     public function hasLink(string $rel) : bool
     {
-        $rels = array_map(
-            function (Link $link) {
-                return $link->getRel();
+        $rels = array_reduce(
+            $this->links,
+            function (array $result, Link $link) {
+                return array_merge($result, $link->getRels());
             },
-            $this->links
+            []
         );
 
         return in_array($rel, $rels);
@@ -112,7 +113,7 @@ final class Entity
     public function getLink(string $rel) : Link
     {
         foreach ($this->links as $link) {
-            if ($link->getRel() === $rel) {
+            if (in_array($rel, $link->getRels())) {
                 return $link;
             }
         }

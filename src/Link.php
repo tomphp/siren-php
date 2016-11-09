@@ -2,26 +2,42 @@
 
 namespace TomPHP\Siren;
 
+use Assert\Assertion;
+
 final class Link
 {
     /**
-     * @var string
+     * @var string[]
      */
-    private $rel;
+    private $rels;
 
     /**
      * @var string
      */
     private $href;
 
-    public function __construct(string $rel, string $href)
+    /**
+     * @param string[] $rels
+     * @param string   $href
+     */
+    public function __construct(array $rels, string $href)
     {
-        $this->rel = $rel;
+        Assertion::allString($rels);
+
+        $this->rels = $rels;
         $this->href = $href;
     }
 
-    public function getRel() : string
+    /**
+     * @return string[]
+     */
+    public function getRels() : array
     {
-        return $this->rel;
+        return $this->rels;
+    }
+
+    public function hasRel(string $rel) : bool
+    {
+        return in_array($rel, $this->rels);
     }
 }

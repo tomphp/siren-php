@@ -55,8 +55,8 @@ final class EntityBuilder
     }
 
     /**
-     * @param Link|string $linkOrRel
-     * @param string      $href
+     * @param Link|string|string[] $linkOrRel
+     * @param string               $href
      *
      * @return $this
      */
@@ -64,7 +64,7 @@ final class EntityBuilder
     {
         Assertion::string($linkOrRel);
 
-        $this->links[] = new Link($linkOrRel, $href);
+        $this->links[] = new Link([$linkOrRel], $href);
 
         return $this;
     }
