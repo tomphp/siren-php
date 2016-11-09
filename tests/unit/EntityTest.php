@@ -176,6 +176,32 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_getLink_it_returns_the_link_by_rel()
+    {
+        $entity = Entity::builder()
+            ->addLink('next', 'http://api.com/next')
+            ->build();
+
+        assertEquals(new Link('next', 'http://api.com/next'), $entity->getLink('next'));
+    }
+
+    /** @test */
+    public function on_getLink_it_throws_NotFound_if_the_link_is_not_found()
+    {
+        $entity = Entity::builder()
+            ->addLink('next', 'http://api.com/next')
+            ->build();
+
+        $this->setExpectedException(
+            NotFound::class,
+            'Link "previous" was not found.',
+            NotFound::LINK
+        );
+
+        $entity->getLink('previous');
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array()
     {
         $entity = Entity::builder()

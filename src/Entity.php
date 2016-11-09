@@ -109,6 +109,17 @@ final class Entity
         return $this->links;
     }
 
+    public function getLink(string $rel) : Link
+    {
+        foreach ($this->links as $link) {
+            if ($link->getRel() === $rel) {
+                return $link;
+            }
+        }
+
+        throw NotFound::forLink($rel);
+    }
+
     public function toArray() : array
     {
         $result = [];

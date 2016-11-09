@@ -36,4 +36,22 @@ final class NotFoundTest extends \PHPUnit_Framework_TestCase
             NotFound::fromProperty('some-property')->getCode()
         );
     }
+
+    /** @test */
+    public function on_forLink_it_sets_the_message()
+    {
+        assertSame(
+            'Link "some-link" was not found.',
+            NotFound::forLink('some-link')->getMessage()
+        );
+    }
+
+    /** @test */
+    public function on_forLink_it_sets_the_code()
+    {
+        assertSame(
+            NotFound::LINK,
+            NotFound::forLink('some-link')->getCode()
+        );
+    }
 }
