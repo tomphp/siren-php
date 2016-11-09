@@ -5,6 +5,7 @@ namespace tests\unit\TomPHP\Siren;
 use TomPHP\Siren\Entity;
 use TomPHP\Siren\Exception\NotFound;
 use TomPHP\Siren\Link;
+use TomPHP\Siren\Action;
 
 final class EntityTest extends \PHPUnit_Framework_TestCase
 {
@@ -202,6 +203,31 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_getTitle_it_returns_the_title()
+    {
+        $entity = Entity::builder()
+            ->setTitle('The Title')
+            ->build();
+
+        assertSame('The Title', $entity->getTitle());
+    }
+
+    /** @test */
+    public function on_getActions_it_returns_the_actions()
+    {
+        $action = Action::builder()
+            ->setName('example-action')
+            ->setHref('http://api.com/example')
+            ->build();
+
+        $entity = Entity::builder()
+            ->addAction($action)
+            ->build();
+
+        assertEquals([$action], $entity->getActions());
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array()
     {
         $entity = Entity::builder()
@@ -222,16 +248,6 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ],
             $entity->toArray()
         );
-    }
-
-    /** @test */
-    public function it_can_have_a_title()
-    {
-        $entity = Entity::builder()
-            ->setTitle('The Title')
-            ->build();
-
-        assertSame('The Title', $entity->getTitle());
     }
 
     /** @test */

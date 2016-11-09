@@ -32,7 +32,7 @@ final class ActionBuilder
     /**
      * @return $this
      */
-    public function setName(string $name)
+    public function setName(string $name) : self
     {
         $this->name = $name;
 
@@ -42,7 +42,7 @@ final class ActionBuilder
     /**
      * @return $this
      */
-    public function setHref(string $href)
+    public function setHref(string $href) : self
     {
         $this->href = $href;
 
@@ -52,7 +52,7 @@ final class ActionBuilder
     /**
      * @return $this
      */
-    public function addClass(string $name)
+    public function addClass(string $name) : self
     {
         $this->classes[] = $name;
 
@@ -62,7 +62,7 @@ final class ActionBuilder
     /**
      * @return $this
      */
-    public function setMethod(string $method)
+    public function setMethod(string $method) : self
     {
         $this->method = $method;
 
@@ -72,7 +72,7 @@ final class ActionBuilder
     /**
      * @return $this
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title) : self
     {
         $this->title = $title;
 

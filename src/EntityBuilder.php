@@ -25,9 +25,14 @@ final class EntityBuilder
     private $title;
 
     /**
+     * @var Action[]
+     */
+    private $actions = [];
+
+    /**
      * @return $this
      */
-    public function addClass(string $name)
+    public function addClass(string $name) : self
     {
         $this->classes[] = $name;
 
@@ -37,7 +42,7 @@ final class EntityBuilder
     /**
      * @return $this
      */
-    public function addProperties(array $properties)
+    public function addProperties(array $properties) : self
     {
         $this->properties = array_merge(
             $this->properties,
@@ -50,7 +55,7 @@ final class EntityBuilder
     /**
      * @return $this
      */
-    public function addProperty(string $name, $value)
+    public function addProperty(string $name, $value) : self
     {
         $this->properties[$name] = $value;
 
@@ -60,7 +65,7 @@ final class EntityBuilder
     /**
      * @return $this
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title) : self
     {
         $this->title = $title;
 
@@ -82,7 +87,7 @@ final class EntityBuilder
         $classes = [],
         string $title = null,
         string $type = null
-    ) {
+    ) : self {
         $link = $linkOrRel;
 
         if (!$linkOrRel instanceof Link) {
@@ -96,13 +101,24 @@ final class EntityBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function addAction(Action $action) : self
+    {
+        $this->actions[] = $action;
+
+        return $this;
+    }
+
     public function build() : Entity
     {
         return new Entity(
             $this->classes,
             $this->properties,
             $this->links,
-            $this->title
+            $this->title,
+            $this->actions
         );
     }
 }
