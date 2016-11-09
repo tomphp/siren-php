@@ -29,4 +29,28 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
 
         assertFalse($link->hasRel('self'));
     }
+
+    /** @test */
+    public function on_getClasses_it_returns_the_classes()
+    {
+        $link = new Link(['next'], 'http://api.com/next', ['class-one', 'class-two']);
+
+        assertSame(['class-one', 'class-two'], $link->getClasses());
+    }
+
+    /** @test */
+    public function on_getTitle_it_returns_the_title()
+    {
+        $link = new Link(['next'], 'http://api.com/next', [], 'Next Page');
+
+        assertSame('Next Page', $link->getTitle());
+    }
+
+    /** @test */
+    public function on_getType_it_returns_the_type()
+    {
+        $link = new Link(['next'], 'http://api.com/next', [], null, 'application/json');
+
+        assertSame('application/json', $link->getType());
+    }
 }
