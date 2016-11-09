@@ -2,8 +2,6 @@
 
 namespace TomPHP\Siren;
 
-use Assert\Assertion;
-
 final class EntityBuilder
 {
     /**

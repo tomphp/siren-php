@@ -37,6 +37,8 @@ final class Entity
      * @param array    $properties
      * @param Link[]   $links
      * @param string   $title
+     *
+     * @internal
      */
     public function __construct(
         array $classes,
