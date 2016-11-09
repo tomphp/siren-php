@@ -4,6 +4,7 @@ namespace tests\unit\TomPHP\Siren;
 
 use TomPHP\Siren\Entity;
 use TomPHP\Siren\Exception\NotFound;
+use TomPHP\Siren\Link;
 
 final class EntityTest extends \PHPUnit_Framework_TestCase
 {
@@ -155,6 +156,23 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         assertTrue($entity->hasLink('next'));
+    }
+
+    /** @test */
+    public function on_getLinks_it_returns_all_added_links()
+    {
+        $entity = Entity::builder()
+            ->addLink('next', 'http://api.com/next')
+            ->addLink('previous', 'http://api.com/previous')
+            ->build();
+
+        assertEquals(
+            [
+                new Link('next', 'http://api.com/next'),
+                new Link('previous', 'http://api.com/previous'),
+            ],
+            $entity->getLinks()
+        );
     }
 
     /** @test */

@@ -101,6 +101,14 @@ final class Entity
         return in_array($rel, $rels);
     }
 
+    /**
+     * @return Link[]
+     */
+    public function getLinks() : array
+    {
+        return $this->links;
+    }
+
     public function toArray() : array
     {
         $result = [];
