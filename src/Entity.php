@@ -164,6 +164,20 @@ final class Entity
         return false;
     }
 
+    /**
+     * @throws NotFound
+     */
+    public function getAction(string $name) : Action
+    {
+        foreach ($this->actions as $action) {
+            if ($action->getName() === $name) {
+                return $action;
+            }
+        }
+
+        throw NotFound::forAction($name);
+    }
+
     public function toArray() : array
     {
         $result = [];
