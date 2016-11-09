@@ -7,6 +7,14 @@ use TomPHP\Siren\Link;
 final class LinkTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
+    public function it_must_have_at_least_one_rel()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        new Link([], 'http://api.com');
+    }
+
+    /** @test */
     public function on_hasRel_it_returns_true_if_the_rel_is_pesent()
     {
         $link = new Link(['self'], 'http://api.com');

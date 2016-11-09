@@ -22,7 +22,7 @@ final class Link
      */
     public function __construct(array $rels, string $href)
     {
-        Assertion::allString($rels);
+        \Assert\that($rels)->notEmpty()->all()->string();
 
         $this->rels = $rels;
         $this->href = $href;
