@@ -228,6 +228,36 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_hasAction_it_returns_false_if_there_is_not_a_matching_action()
+    {
+        $action = Action::builder()
+            ->setName('example-action')
+            ->setHref('http://api.com/example')
+            ->build();
+
+        $entity = Entity::builder()
+            ->addAction($action)
+            ->build();
+
+        assertFalse($entity->hasAction('unknown-action'));
+    }
+
+    /** @test */
+    public function on_hasAction_it_returns_true_if_there_is_a_matching_action()
+    {
+        $action = Action::builder()
+            ->setName('example-action')
+            ->setHref('http://api.com/example')
+            ->build();
+
+        $entity = Entity::builder()
+            ->addAction($action)
+            ->build();
+
+        assertTrue($entity->hasAction('example-action'));
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array()
     {
         $entity = Entity::builder()

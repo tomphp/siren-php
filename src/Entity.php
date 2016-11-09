@@ -153,6 +153,17 @@ final class Entity
         return $this->actions;
     }
 
+    public function hasAction(string $name) : bool
+    {
+        foreach ($this->actions as $action) {
+            if ($action->getName() === $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function toArray() : array
     {
         $result = [];
