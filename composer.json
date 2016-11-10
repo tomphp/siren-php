@@ -1,5 +1,5 @@
 {
-    "name": "tomphp/siren-php",
+    "name": "tomphp/siren",
     "description": "A library for creating and parsing Siren APIs in PHP",
     "type": "library",
     "require": {
