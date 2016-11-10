@@ -2,10 +2,10 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use TomPHP\Siren\Action;
 use TomPHP\Siren\Entity;
 use TomPHP\Siren\Exception\NotFound;
 use TomPHP\Siren\Link;
-use TomPHP\Siren\Action;
 
 final class EntityTest extends \PHPUnit_Framework_TestCase
 {
@@ -288,26 +288,59 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_toArray_it_converts_to_an_array_for_minimal_values()
+    {
+        $entity = Entity::builder()
+            ->build();
+
+        assertSame([], $entity->toArray());
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array()
     {
         $entity = Entity::builder()
             ->addClass('example-class')
-            ->addProperties([
-                'a' => 1,
-                'b' => 2,
-            ])
+            ->addProperties(['a' => 1, 'b' => 2])
+            ->setTitle('Example Title')
             ->build();
 
-        assertSame(
+        assertEquals(
             [
                 'class' => ['example-class'],
-                'properties' => [
-                    'a' => 1,
-                    'b' => 2,
-                ],
+                'properties' => ['a' => 1, 'b' => 2],
+                'title' => 'Example Title',
             ],
             $entity->toArray()
         );
+    }
+
+    /** @test */
+    public function on_toArray_it_includes_link_arrays()
+    {
+        $link = new Link(['self'], 'http://api.com');
+
+        $entity = Entity::builder()
+            ->addLink($link)
+            ->build();
+
+        assertEquals(['links' => [$link->toArray()]], $entity->toArray());
+    }
+
+    /** @test */
+    public function on_toArray_it_includes_action_arrays()
+    {
+        $action = Action::builder()
+            ->setName('add-customer')
+            ->setHref('http://api.com/cusotmer')
+            ->setMethod('POST')
+            ->build();
+
+        $entity = Entity::builder()
+            ->addAction($action)
+            ->build();
+
+        assertEquals(['actions' => [$action->toArray()]], $entity->toArray());
     }
 
     /** @test */

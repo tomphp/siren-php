@@ -182,10 +182,24 @@ final class Entity
     {
         $result = [];
 
-        $result['class'] = $this->classes;
+        if (count($this->classes)) {
+            $result['class'] = $this->classes;
+        }
 
         if (count($this->properties)) {
             $result['properties'] = $this->properties;
+        }
+
+        if (!is_null($this->title)) {
+            $result['title'] = $this->title;
+        }
+
+        if (count($this->links)) {
+            $result['links'] = array_map([$this, 'convertToArray'], $this->links);
+        }
+
+        if (count($this->actions)) {
+            $result['actions'] = array_map([$this, 'convertToArray'], $this->actions);
         }
 
         return $result;
@@ -194,5 +208,10 @@ final class Entity
     public function toJson() : string
     {
         return json_encode($this->toArray());
+    }
+
+    private function convertToArray($object) : array
+    {
+        return $object->toArray();
     }
 }
