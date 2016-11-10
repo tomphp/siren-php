@@ -344,6 +344,35 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_fromArray_it_creates_an_instance_with_minimum_details()
+    {
+        $entity = Entity::builder()
+            ->build();
+
+        assertEquals($entity, Entity::fromArray($entity->toArray()));
+    }
+
+    /** @test */
+    public function on_fromArray_it_creates_an_instance_with_all_details()
+    {
+        $action = Action::builder()
+            ->setName('add-customer')
+            ->setHref('http://api.com/cusotmer')
+            ->setMethod('POST')
+            ->build();
+
+        $entity = Entity::builder()
+            ->addClass('example-class')
+            ->addProperties(['a' => 1, 'b' => 2])
+            ->setTitle('Example Title')
+            ->addAction($action)
+            ->addLink('self', 'http://api.com')
+            ->build();
+
+        assertEquals($entity, Entity::fromArray($entity->toArray()));
+    }
+
+    /** @test */
     public function on_toJson_it_returns_a_json_string()
     {
         $entity = Entity::builder()

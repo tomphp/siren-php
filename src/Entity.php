@@ -37,6 +37,37 @@ final class Entity
         return new EntityBuilder();
     }
 
+    public static function fromArray(array $array) : self
+    {
+        $links = [];
+        if (isset($array['links'])) {
+            $links = array_map(
+                function (array $array) {
+                    return Link::fromArray($array);
+                },
+                $array['links']
+            );
+        }
+
+        $actions = [];
+        if (isset($array['actions'])) {
+            $actions = array_map(
+                function (array $array) {
+                    return Action::fromArray($array);
+                },
+                $array['actions']
+            );
+        }
+
+        return new self(
+            $array['class'] ?? [],
+            $array['properties'] ?? [],
+            $links,
+            $array['title'] ?? null,
+            $actions
+        );
+    }
+
     /**
      * @param string[] $classes
      * @param array    $properties
