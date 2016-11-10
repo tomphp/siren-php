@@ -29,6 +29,17 @@ final class Link
      */
     private $type;
 
+    public static function fromArray(array $array)
+    {
+        return new self(
+            $array['rel'],
+            $array['href'],
+            $array['class'] ?? [],
+            $array['title'] ?? null,
+            $array['type'] ?? null
+        );
+    }
+
     /**
      * @param string[] $rels
      * @param string   $href

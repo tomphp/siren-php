@@ -55,7 +55,7 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function on_asArray_it_returns_an_array_with_minium_values()
+    public function on_toArray_it_returns_an_array_with_minium_values()
     {
         $link = new Link(['self'], 'http://api.com/self');
 
@@ -69,7 +69,7 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function on_asArray_it_returns_an_array_will_all_values()
+    public function on_toArray_it_returns_an_array_will_all_values()
     {
         $link = new Link(
             ['self'],
@@ -89,5 +89,27 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
             ],
             $link->toArray()
         );
+    }
+
+    /** @test */
+    public function on_fromArray_it_creates_an_instance_from_minimum_details()
+    {
+        $link = new Link(['self'], 'http://api.com');
+
+        assertEquals($link, Link::fromArray($link->toArray()));
+    }
+
+    /** @test */
+    public function on_fromArray_it_creates_an_instance_from_all_details()
+    {
+        $link = new Link(
+            ['self'],
+            'http://api.com/self',
+            ['product'],
+            'Product',
+            'application/json'
+        );
+
+        assertEquals($link, Link::fromArray($link->toArray()));
     }
 }
