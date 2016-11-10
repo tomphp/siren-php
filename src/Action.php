@@ -34,6 +34,17 @@ final class Action
         return new ActionBuilder();
     }
 
+    public static function fromArray(array $array) : self
+    {
+        return new self(
+            $array['name'],
+            $array['href'],
+            $array['class'] ?? [],
+            $array['method'] ?? 'GET',
+            $array['title'] ?? null
+        );
+    }
+
     /**
      * @param string   $name
      * @param string   $href

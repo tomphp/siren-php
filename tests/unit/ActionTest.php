@@ -140,4 +140,29 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
             $action->toArray()
         );
     }
+
+    /** @test */
+    public function on_fromArray_it_creates_an_instance_from_minimum_details()
+    {
+        $action = Action::builder()
+            ->setName('add-customer')
+            ->setHref('http://api.com/customer')
+            ->build();
+
+        assertEquals($action, Action::fromArray($action->toArray()));
+    }
+
+    /** @test */
+    public function on_fromArray_it_creates_an_instance_from_all_details()
+    {
+        $action = Action::builder()
+            ->setName('add-customer')
+            ->setHref('http://api.com/customer')
+            ->addClass('customer')
+            ->setMethod('POST')
+            ->setTitle('Add Customer')
+            ->build();
+
+        assertEquals($action, Action::fromArray($action->toArray()));
+    }
 }
