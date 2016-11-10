@@ -83,4 +83,26 @@ final class Link
     {
         return $this->type;
     }
+
+    public function toArray() : array
+    {
+        $result = [
+            'rel' => $this->rels,
+            'href' => $this->href,
+        ];
+
+        if (count($this->classes)) {
+            $result['class'] = $this->classes;
+        }
+
+        if (!is_null($this->title)) {
+            $result['title'] = $this->title;
+        }
+
+        if (!is_null($this->type)) {
+            $result['type'] = $this->type;
+        }
+
+        return $result;
+    }
 }

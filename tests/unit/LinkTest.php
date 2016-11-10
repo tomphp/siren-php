@@ -53,4 +53,41 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
 
         assertSame('application/json', $link->getType());
     }
+
+    /** @test */
+    public function on_asArray_it_returns_an_array_with_minium_values()
+    {
+        $link = new Link(['self'], 'http://api.com/self');
+
+        assertSame(
+            [
+                'rel' => ['self'],
+                'href' => 'http://api.com/self',
+            ],
+            $link->toArray()
+        );
+    }
+
+    /** @test */
+    public function on_asArray_it_returns_an_array_will_all_values()
+    {
+        $link = new Link(
+            ['self'],
+            'http://api.com/self',
+            ['product'],
+            'Product',
+            'application/json'
+        );
+
+        assertSame(
+            [
+               'rel' => ['self'],
+               'href' => 'http://api.com/self',
+               'class' => ['product'],
+               'title' => 'Product',
+               'type' => 'application/json',
+            ],
+            $link->toArray()
+        );
+    }
 }
