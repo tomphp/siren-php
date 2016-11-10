@@ -99,4 +99,45 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
 
         assertSame('Example Title', $action->getTitle());
     }
+
+    /** @test */
+    public function on_getArray_it_returns_an_array_for_minimal_details()
+    {
+        $action = Action::builder()
+            ->setName('add-customer')
+            ->setHref('http://api.com/customer')
+            ->build();
+
+        assertEquals(
+            [
+                'name' => 'add-customer',
+                'href' => 'http://api.com/customer',
+                'method' => 'GET',
+            ],
+            $action->toArray()
+        );
+    }
+
+    /** @test */
+    public function on_getArray_it_returns_an_array_for_all_details()
+    {
+        $action = Action::builder()
+            ->setName('add-customer')
+            ->setHref('http://api.com/customer')
+            ->addClass('customer')
+            ->setMethod('POST')
+            ->setTitle('Add Customer')
+            ->build();
+
+        assertEquals(
+            [
+                'name' => 'add-customer',
+                'href' => 'http://api.com/customer',
+                'method' => 'POST',
+                'class' => ['customer'],
+                'title' => 'Add Customer',
+            ],
+            $action->toArray()
+        );
+    }
 }

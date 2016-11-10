@@ -88,4 +88,23 @@ final class Action
     {
         return $this->title;
     }
+
+    public function toArray() : array
+    {
+        $result = [
+            'name' => $this->name,
+            'href' => $this->href,
+            'method' => $this->method,
+        ];
+
+        if (count($this->classes)) {
+            $result['class'] = $this->classes;
+        }
+
+        if (!is_null($this->title)) {
+            $result['title'] = $this->title;
+        }
+
+        return $result;
+    }
 }
