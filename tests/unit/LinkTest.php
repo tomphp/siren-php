@@ -31,6 +31,14 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_getHref_it_returns_the_href()
+    {
+        $link = new Link(['next'], 'http://api.com/next');
+
+        assertSame('http://api.com/next', $link->getHref());
+    }
+
+    /** @test */
     public function on_getClasses_it_returns_the_classes()
     {
         $link = new Link(['next'], 'http://api.com/next', ['class-one', 'class-two']);

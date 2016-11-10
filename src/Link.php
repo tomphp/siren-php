@@ -77,6 +77,11 @@ final class Link
         return in_array($rel, $this->rels);
     }
 
+    public function getHref() : string
+    {
+        return $this->href;
+    }
+
     /**
      * @return string[]
      */
