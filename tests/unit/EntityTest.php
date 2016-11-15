@@ -363,6 +363,18 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_toArray_it_includes_entity_arrays()
+    {
+        $entityLink = new EntityLink(['example-rel'], 'http://api.com/example');
+
+        $entity = Entity::builder()
+            ->addSubEntity($entityLink)
+            ->build();
+
+        assertEquals(['entities' => [$entityLink->toArray()]], $entity->toArray());
+    }
+
+    /** @test */
     public function on_fromArray_it_creates_an_instance_with_minimum_details()
     {
         $entity = Entity::builder()
@@ -380,12 +392,15 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ->setMethod('POST')
             ->build();
 
+        $entityLink = new EntityLink(['example-rel'], 'http://api.com/example');
+
         $entity = Entity::builder()
             ->addClass('example-class')
             ->addProperties(['a' => 1, 'b' => 2])
             ->setTitle('Example Title')
             ->addAction($action)
             ->addLink('self', 'http://api.com')
+            ->addSubEntity($entityLink)
             ->build();
 
         assertEquals($entity, Entity::fromArray($entity->toArray()));

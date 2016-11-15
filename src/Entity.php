@@ -46,22 +46,17 @@ final class Entity
     {
         $links = [];
         if (isset($array['links'])) {
-            $links = array_map(
-                function (array $array) {
-                    return Link::fromArray($array);
-                },
-                $array['links']
-            );
+            $links = array_map([Link::class, 'fromArray'], $array['links']);
         }
 
         $actions = [];
         if (isset($array['actions'])) {
-            $actions = array_map(
-                function (array $array) {
-                    return Action::fromArray($array);
-                },
-                $array['actions']
-            );
+            $actions = array_map([Action::class, 'fromArray'], $array['actions']);
+        }
+
+        $entities = [];
+        if (isset($array['entities'])) {
+            $entities = array_map([EntityLink::class, 'fromArray'], $array['entities']);
         }
 
         return new self(
@@ -69,7 +64,8 @@ final class Entity
             $array['properties'] ?? [],
             $links,
             $array['title'] ?? null,
-            $actions
+            $actions,
+            $entities
         );
     }
 
@@ -248,6 +244,10 @@ final class Entity
 
         if (count($this->actions)) {
             $result['actions'] = array_map([$this, 'convertToArray'], $this->actions);
+        }
+
+        if (count($this->entities)) {
+            $result['entities'] = array_map([$this, 'convertToArray'], $this->entities);
         }
 
         return $result;
