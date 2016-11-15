@@ -30,6 +30,11 @@ final class EntityBuilder
     private $actions = [];
 
     /**
+     * @var EntityLink[]
+     */
+    private $subEntities = [];
+
+    /**
      * @return $this
      */
     public function addClass(string $name) : self
@@ -111,6 +116,16 @@ final class EntityBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function addSubEntity(EntityLink $entity) : self
+    {
+        $this->subEntities[] = $entity;
+
+        return $this;
+    }
+
     public function build() : Entity
     {
         return new Entity(
@@ -118,7 +133,8 @@ final class EntityBuilder
             $this->properties,
             $this->links,
             $this->title,
-            $this->actions
+            $this->actions,
+            $this->subEntities
         );
     }
 }

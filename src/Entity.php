@@ -32,6 +32,11 @@ final class Entity
      */
     private $actions;
 
+    /**
+     * @var EntityLink[]
+     */
+    private $entities;
+
     public static function builder() : EntityBuilder
     {
         return new EntityBuilder();
@@ -69,11 +74,12 @@ final class Entity
     }
 
     /**
-     * @param string[] $classes
-     * @param array    $properties
-     * @param Link[]   $links
-     * @param string   $title
-     * @param Action[] $actions
+     * @param string[]     $classes
+     * @param array        $properties
+     * @param Link[]       $links
+     * @param string       $title
+     * @param Action[]     $actions
+     * @param EntityLink[] $entities
      *
      * @internal
      */
@@ -82,17 +88,20 @@ final class Entity
         array $properties,
         array $links,
         string $title = null,
-        array $actions = []
+        array $actions = [],
+        array $entities = []
     ) {
         Assertion::allString($classes);
         Assertion::allIsInstanceOf($links, Link::class);
         Assertion::allIsInstanceOf($actions, Action::class);
+        Assertion::allIsInstanceOf($entities, EntityLink::class);
 
         $this->classes = array_unique($classes);
         $this->properties = $properties;
         $this->links = $links;
         $this->title = $title;
         $this->actions = $actions;
+        $this->entities = $entities;
     }
 
     /**
@@ -207,6 +216,14 @@ final class Entity
         }
 
         throw NotFound::forAction($name);
+    }
+
+    /**
+     * @return EntityLink[]
+     */
+    public function getEntities() : array
+    {
+        return $this->entities;
     }
 
     public function toArray() : array

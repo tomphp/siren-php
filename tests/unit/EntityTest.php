@@ -4,6 +4,7 @@ namespace tests\unit\TomPHP\Siren;
 
 use TomPHP\Siren\Action;
 use TomPHP\Siren\Entity;
+use TomPHP\Siren\EntityLink;
 use TomPHP\Siren\Exception\NotFound;
 use TomPHP\Siren\Link;
 
@@ -285,6 +286,24 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
         );
 
         $entity->getAction('add-customer');
+    }
+
+    /** @test */
+    public function on_getEntities_it_returns_all_entities()
+    {
+        $subEntity = new EntityLink(
+            ['example-rel'],
+            'http://api.com',
+            ['example-class'],
+            'Example Title',
+            'application/json'
+        );
+
+        $entity = Entity::builder()
+            ->addSubEntity($subEntity)
+            ->build();
+
+        assertEquals([$subEntity], $entity->getEntities());
     }
 
     /** @test */
