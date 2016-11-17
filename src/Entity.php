@@ -3,9 +3,10 @@
 namespace TomPHP\Siren;
 
 use Assert\Assertion;
+use Psr\Link\LinkProviderInterface;
 use TomPHP\Siren\Exception\NotFound;
 
-final class Entity
+final class Entity implements LinkProviderInterface
 {
     /**
      * @var string[]
@@ -165,15 +166,16 @@ final class Entity
         return $this->links;
     }
 
-    public function getLink(string $rel) : Link
+    public function getLinksByRel($rel)
     {
-        foreach ($this->links as $link) {
-            if (in_array($rel, $link->getRels())) {
-                return $link;
-            }
-        }
-
-        throw NotFound::forLink($rel);
+        return array_values(
+            array_filter(
+                $this->links,
+                function (Link $link) use ($rel) {
+                    return in_array($rel, $link->getRels());
+                }
+            )
+        );
     }
 
     public function getTitle() : string

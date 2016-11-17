@@ -2,10 +2,17 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use Psr\Link\LinkInterface;
 use TomPHP\Siren\Link;
 
 final class LinkTest extends \PHPUnit_Framework_TestCase
 {
+    /** @test */
+    public function it_is_a_PSR13_link()
+    {
+        assertInstanceOf(LinkInterface::class, new Link(['rel'], 'http://api.com'));
+    }
+
     /** @test */
     public function it_must_have_at_least_one_rel()
     {
@@ -60,6 +67,22 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
         $link = new Link(['next'], 'http://api.com/next', [], null, 'application/json');
 
         assertSame('application/json', $link->getType());
+    }
+
+    /** @test */
+    public function on_isTemplated_it_returns_false()
+    {
+        $link = new Link(['next'], 'http://api.com/next');
+
+        assertFalse($link->isTemplated());
+    }
+
+    /** @test */
+    public function on_getAttributes_it_returns_an_empty_array()
+    {
+        $link = new Link(['next'], 'http://api.com/next');
+
+        assertSame([], $link->getAttributes());
     }
 
     /** @test */

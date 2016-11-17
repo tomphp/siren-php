@@ -42,7 +42,7 @@ final class EntityBuilderTest extends \PHPUnit_Framework_TestCase
             ->addLink($link)
             ->build();
 
-        assertSame($link, $entity->getLink('self'));
+        assertSame([$link], $entity->getLinksByRel('self'));
     }
 
     /** @test */
@@ -53,8 +53,8 @@ final class EntityBuilderTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         assertEquals(
-            new Link(['self'], 'http://api.com', ['the-class'], 'The Link', 'the/type'),
-            $entity->getLink('self')
+            [new Link(['self'], 'http://api.com', ['the-class'], 'The Link', 'the/type')],
+            $entity->getLinksByRel('self')
         );
     }
 
@@ -66,8 +66,8 @@ final class EntityBuilderTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         assertEquals(
-            new Link(['self'], 'http://api.com', ['the-class'], 'The Link', 'the/type'),
-            $entity->getLink('self')
+            [new Link(['self'], 'http://api.com', ['the-class'], 'The Link', 'the/type')],
+            $entity->getLinksByRel('self')
         );
     }
 }

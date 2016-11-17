@@ -2,7 +2,9 @@
 
 namespace TomPHP\Siren;
 
-final class Link
+use Psr\Link\LinkInterface;
+
+final class Link implements LinkInterface
 {
     /**
      * @var string[]
@@ -64,9 +66,6 @@ final class Link
         $this->type = $type;
     }
 
-    /**
-     * @return string[]
-     */
     public function getRels() : array
     {
         return $this->rels;
@@ -98,6 +97,16 @@ final class Link
     public function getType() : string
     {
         return $this->type;
+    }
+
+    public function isTemplated()
+    {
+        return false;
+    }
+
+    public function getAttributes()
+    {
+        return [];
     }
 
     public function toArray() : array

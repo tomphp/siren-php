@@ -2,6 +2,7 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use Psr\Link\LinkProviderInterface;
 use TomPHP\Siren\Action;
 use TomPHP\Siren\Entity;
 use TomPHP\Siren\EntityLink;
@@ -10,6 +11,15 @@ use TomPHP\Siren\Link;
 
 final class EntityTest extends \PHPUnit_Framework_TestCase
 {
+    /** @test */
+    public function it_is_a_link_provider()
+    {
+        $entity = Entity::builder()
+            ->build();
+
+        assertInstanceOf(LinkProviderInterface::class, $entity);
+    }
+
     /** @test */
     public function on_getClasses_it_returns_the_classes()
     {
@@ -178,29 +188,30 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function on_getLink_it_returns_the_link_by_rel()
+    public function on_getLinksByRel_it_returns_the_link_by_rel()
     {
         $entity = Entity::builder()
-            ->addLink('next', 'http://api.com/next')
+            ->addLink('next', 'http://api.com/next1')
+            ->addLink('next', 'http://api.com/next2')
             ->build();
 
-        assertEquals(new Link(['next'], 'http://api.com/next'), $entity->getLink('next'));
+        assertEquals(
+            [
+                new Link(['next'], 'http://api.com/next1'),
+                new Link(['next'], 'http://api.com/next2'),
+            ],
+            $entity->getLinksByRel('next')
+        );
     }
 
     /** @test */
-    public function on_getLink_it_throws_NotFound_if_the_link_is_not_found()
+    public function on_getLinksByRel_it_returns_an_emoty_array_if_not_links_are_found()
     {
         $entity = Entity::builder()
             ->addLink('next', 'http://api.com/next')
             ->build();
 
-        $this->setExpectedException(
-            NotFound::class,
-            'Link "previous" was not found.',
-            NotFound::LINK
-        );
-
-        $entity->getLink('previous');
+        assertSame([], $entity->getLinksByRel('previous'));
     }
 
     /** @test */
