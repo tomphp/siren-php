@@ -6,9 +6,9 @@ use Psr\Link\LinkProviderInterface;
 use TomPHP\Siren\Action;
 use TomPHP\Siren\Entity;
 use TomPHP\Siren\EntityLink;
+use TomPHP\Siren\EntityRepresentation;
 use TomPHP\Siren\Exception\NotFound;
 use TomPHP\Siren\Link;
-use TomPHP\Siren\EntityRepresentation;
 
 final class EntityTest extends \PHPUnit_Framework_TestCase
 {
