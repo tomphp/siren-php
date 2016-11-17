@@ -4,7 +4,7 @@ namespace TomPHP\Siren;
 
 use Assert\Assertion;
 
-final class EntityLink
+final class EntityLink implements EntityRepresentation
 {
     /**
      * @var array
@@ -31,7 +31,10 @@ final class EntityLink
      */
     private $type;
 
-    public static function fromArray(array $array) : self
+    /**
+     * @return self
+     */
+    public static function fromArray(array $array) : EntityRepresentation
     {
         return new self(
             $array['rel'],

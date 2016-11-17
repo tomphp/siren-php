@@ -6,7 +6,7 @@ use Assert\Assertion;
 use Psr\Link\LinkProviderInterface;
 use TomPHP\Siren\Exception\NotFound;
 
-final class Entity implements LinkProviderInterface
+final class Entity implements LinkProviderInterface, EntityRepresentation
 {
     /**
      * @var string[]
@@ -43,7 +43,10 @@ final class Entity implements LinkProviderInterface
         return new EntityBuilder();
     }
 
-    public static function fromArray(array $array) : self
+    /**
+     * @return self
+     */
+    public static function fromArray(array $array) : EntityRepresentation
     {
         $links = [];
         if (isset($array['links'])) {
@@ -57,7 +60,16 @@ final class Entity implements LinkProviderInterface
 
         $entities = [];
         if (isset($array['entities'])) {
-            $entities = array_map([EntityLink::class, 'fromArray'], $array['entities']);
+            $entities = array_map(
+                function (array $entity) {
+                    if (array_key_exists('href', $entity)) {
+                        return EntityLink::fromArray($entity);
+                    } else {
+                        return Entity::fromArray($entity);
+                    }
+                },
+                $array['entities']
+            );
         }
 
         return new self(
@@ -71,12 +83,12 @@ final class Entity implements LinkProviderInterface
     }
 
     /**
-     * @param string[]     $classes
-     * @param array        $properties
-     * @param Link[]       $links
-     * @param string       $title
-     * @param Action[]     $actions
-     * @param EntityLink[] $entities
+     * @param string[]               $classes
+     * @param array                  $properties
+     * @param Link[]                 $links
+     * @param string                 $title
+     * @param Action[]               $actions
+     * @param EntityRepresentation[] $entities
      *
      * @internal
      */
@@ -91,7 +103,7 @@ final class Entity implements LinkProviderInterface
         Assertion::allString($classes);
         Assertion::allIsInstanceOf($links, Link::class);
         Assertion::allIsInstanceOf($actions, Action::class);
-        Assertion::allIsInstanceOf($entities, EntityLink::class);
+        Assertion::allIsInstanceOf($entities, EntityRepresentation::class);
 
         $this->classes = array_unique($classes);
         $this->properties = $properties;

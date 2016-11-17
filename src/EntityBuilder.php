@@ -119,7 +119,7 @@ final class EntityBuilder
     /**
      * @return $this
      */
-    public function addSubEntity(EntityLink $entity) : self
+    public function addSubEntity(EntityRepresentation $entity) : self
     {
         $this->subEntities[] = $entity;
 

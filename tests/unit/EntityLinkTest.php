@@ -3,9 +3,18 @@
 namespace tests\unit\TomPHP\Siren;
 
 use TomPHP\Siren\EntityLink;
+use TomPHP\Siren\EntityRepresentation;
 
 final class EntityLinkTest extends \PHPUnit_Framework_TestCase
 {
+    /** @test */
+    public function it_is_an_entity_representation()
+    {
+        $link = new EntityLink(['example-rel'], 'http://api.com/example');
+
+        assertInstanceOf(EntityRepresentation::class, $link);
+    }
+
     /** @test */
     public function on_getArray_it_returns_an_array_for_minimal_details()
     {

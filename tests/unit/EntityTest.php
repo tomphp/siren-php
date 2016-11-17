@@ -8,9 +8,19 @@ use TomPHP\Siren\Entity;
 use TomPHP\Siren\EntityLink;
 use TomPHP\Siren\Exception\NotFound;
 use TomPHP\Siren\Link;
+use TomPHP\Siren\EntityRepresentation;
 
 final class EntityTest extends \PHPUnit_Framework_TestCase
 {
+    /** @test */
+    public function it_is_an_entity_representation()
+    {
+        $entity = Entity::builder()
+            ->build();
+
+        assertInstanceOf(EntityRepresentation::class, $entity);
+    }
+
     /** @test */
     public function it_is_a_link_provider()
     {
@@ -318,6 +328,18 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_getEntities_it_can_return_real_entities()
+    {
+        $subEntity = Entity::builder()->build();
+
+        $entity = Entity::builder()
+            ->addSubEntity($subEntity)
+            ->build();
+
+        assertEquals([$subEntity], $entity->getEntities());
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array_for_minimal_values()
     {
         $entity = Entity::builder()
@@ -404,6 +426,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         $entityLink = new EntityLink(['example-rel'], 'http://api.com/example');
+        $subEntity = Entity::builder()->build();
 
         $entity = Entity::builder()
             ->addClass('example-class')
@@ -412,6 +435,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ->addAction($action)
             ->addLink('self', 'http://api.com')
             ->addSubEntity($entityLink)
+            ->addSubEntity($subEntity)
             ->build();
 
         assertEquals($entity, Entity::fromArray($entity->toArray()));
