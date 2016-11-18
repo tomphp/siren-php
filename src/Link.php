@@ -89,6 +89,11 @@ final class Link implements LinkInterface
         return $this->classes;
     }
 
+    public function hasClass(string $class) : bool
+    {
+        return in_array($class, $this->classes);
+    }
+
     public function getTitle() : string
     {
         return $this->title;

@@ -215,7 +215,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function on_getLinksByRel_it_returns_an_emoty_array_if_not_links_are_found()
+    public function on_getLinksByRel_it_returns_an_emoty_array_if_no_links_are_found()
     {
         $entity = Entity::builder()
             ->addLink('next', 'http://api.com/next')
@@ -224,6 +224,31 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
         assertSame([], $entity->getLinksByRel('previous'));
     }
 
+    /** @test */
+    public function on_getLinksByClass_it_returns_the_link_by_class()
+    {
+        $entity = Entity::builder()
+            ->addLink('next', 'http://api.com/next', 'class-a')
+            ->addLink('previous', 'http://api.com/previous', 'class-b')
+            ->build();
+
+        assertEquals(
+            [
+                new Link(['previous'], 'http://api.com/previous', ['class-b']),
+            ],
+            $entity->getLinksByClass('class-b')
+        );
+    }
+
+    /** @test */
+    public function on_getLinksByClass_it_returns_an_emoty_array_if_no_links_are_found()
+    {
+        $entity = Entity::builder()
+            ->addLink('next', 'http://api.com/next', ['example-class'])
+            ->build();
+
+        assertSame([], $entity->getLinksByClass('unknown-class'));
+    }
     /** @test */
     public function on_getTitle_it_returns_the_title()
     {

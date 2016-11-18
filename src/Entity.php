@@ -183,7 +183,19 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
             array_filter(
                 $this->links,
                 function (Link $link) use ($rel) {
-                    return in_array($rel, $link->getRels());
+                    return $link->hasRel($rel);
+                }
+            )
+        );
+    }
+
+    public function getLinksByClass(string $class)
+    {
+        return array_values(
+            array_filter(
+                $this->links,
+                function (Link $link) use ($class) {
+                    return $lina->hasClass($class);
                 }
             )
         );

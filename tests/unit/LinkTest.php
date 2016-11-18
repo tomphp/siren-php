@@ -54,6 +54,22 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_hasClass_it_returns_true_if_class_rel_is_pesent()
+    {
+        $link = new Link(['self'], 'http://api.com', ['example-class']);
+
+        assertTrue($link->hasClass('example-class'));
+    }
+
+    /** @test */
+    public function on_hasClass_it_returns_false_if_the_class_is_not_pesent()
+    {
+        $link = new Link(['next'], 'http://api.com/next', ['example-class']);
+
+        assertFalse($link->hasClass('unknown-class'));
+    }
+
+    /** @test */
     public function on_getTitle_it_returns_the_title()
     {
         $link = new Link(['next'], 'http://api.com/next', [], 'Next Page');
