@@ -1,4 +1,4 @@
-# siren-php
+# Siren
 
 A serialiser and parser for [Siren](https://github.com/kevinswiber/siren) APIs.
 
