@@ -340,6 +340,25 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_getEntitiesByProperty()
+    {
+        $tom = Entity::builder()
+            ->addProperty('name', 'Tom')
+            ->build();
+
+        $jerry = Entity::builder()
+            ->addProperty('name', 'jerry')
+            ->build();
+
+        $entity = Entity::builder()
+            ->addSubEntity($tom)
+            ->addSubEntity($jerry)
+            ->build();
+
+        assertEquals([$tom], $entity->getEntitiesByProperty('name', 'Tom'));
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array_for_minimal_values()
     {
         $entity = Entity::builder()
