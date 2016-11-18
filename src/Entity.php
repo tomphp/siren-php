@@ -195,7 +195,7 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
             array_filter(
                 $this->links,
                 function (Link $link) use ($class) {
-                    return $lina->hasClass($class);
+                    return $link->hasClass($class);
                 }
             )
         );
