@@ -15,7 +15,7 @@ large backwards compatibility breaks can be expected in new releases.
 ## Installing
 
 ```
-composer require tomphp/siren
+composer require tomphp/siren:dev-master
 ```
 
 ## Serialising
