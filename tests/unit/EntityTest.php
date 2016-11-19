@@ -249,6 +249,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
 
         assertSame([], $entity->getLinksByClass('unknown-class'));
     }
+
     /** @test */
     public function on_getTitle_it_returns_the_title()
     {
