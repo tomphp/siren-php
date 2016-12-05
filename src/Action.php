@@ -2,6 +2,8 @@
 
 namespace TomPHP\Siren;
 
+use Assert\Assertion;
+
 final class Action
 {
     /**
@@ -29,6 +31,11 @@ final class Action
      */
     private $title;
 
+    /**
+     * @var Field[]
+     */
+    private $fields;
+
     public static function builder() : ActionBuilder
     {
         return new ActionBuilder();
@@ -36,12 +43,18 @@ final class Action
 
     public static function fromArray(array $array) : self
     {
+        $fields = [];
+        if (isset($array['fields'])) {
+            $fields = array_map([Field::class, 'fromArray'], $array['fields']);
+        }
+
         return new self(
             $array['name'],
             $array['href'],
             $array['class'] ?? [],
             $array['method'] ?? 'GET',
-            $array['title'] ?? null
+            $array['title'] ?? null,
+            $fields
         );
     }
 
@@ -50,6 +63,7 @@ final class Action
      * @param string   $href
      * @param string[] $classes
      * @param string   $method
+     * @param Field[]  $fields
      *
      * @internal
      */
@@ -58,13 +72,18 @@ final class Action
         string $href,
         array $classes,
         string $method,
-        string $title = null
+        string $title = null,
+        array $fields = []
     ) {
+        Assertion::allString($classes);
+        Assertion::allIsInstanceOf($fields, Field::class);
+
         $this->name = $name;
         $this->href = $href;
         $this->classes = $classes;
         $this->method = $method;
         $this->title = $title;
+        $this->fields = $fields;
     }
 
     public function getName() : string
@@ -100,6 +119,11 @@ final class Action
         return $this->title;
     }
 
+    public function getFields() : array
+    {
+        return $this->fields;
+    }
+
     public function toArray() : array
     {
         $result = [
@@ -114,6 +138,15 @@ final class Action
 
         if (!is_null($this->title)) {
             $result['title'] = $this->title;
+        }
+
+        if (count($this->fields)) {
+            $result['fields'] = array_map(
+                function (Field $field) {
+                    return $field->toArray();
+                },
+                $this->fields
+            );
         }
 
         return $result;

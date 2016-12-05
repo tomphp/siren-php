@@ -3,6 +3,7 @@
 namespace tests\unit\TomPHP\Siren;
 
 use TomPHP\Siren\Action;
+use TomPHP\Siren\Field;
 
 final class ActionTest extends \PHPUnit_Framework_TestCase
 {
@@ -101,7 +102,23 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function on_getArray_it_returns_an_array_for_minimal_details()
+    public function on_getFields_it_returns_the_fields()
+    {
+        $action = Action::builder()
+            ->setName('add-customer')
+            ->setHref('http://api.com/customer')
+            ->addField(new Field('first-name'))
+            ->addField(new Field('last-name'))
+            ->build();
+
+        assertEquals(
+            [new Field('first-name'), new Field('last-name')],
+            $action->getFields()
+        );
+    }
+
+    /** @test */
+    public function on_toArray_it_returns_an_array_for_minimal_details()
     {
         $action = Action::builder()
             ->setName('add-customer')
@@ -119,14 +136,17 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function on_getArray_it_returns_an_array_for_all_details()
+    public function on_toArray_it_returns_an_array_for_all_details()
     {
+        $field = new Field('first-name');
+
         $action = Action::builder()
             ->setName('add-customer')
             ->setHref('http://api.com/customer')
             ->addClass('customer')
             ->setMethod('POST')
             ->setTitle('Add Customer')
+            ->addField($field)
             ->build();
 
         assertEquals(
@@ -136,6 +156,7 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
                 'method' => 'POST',
                 'class' => ['customer'],
                 'title' => 'Add Customer',
+                'fields' => [$field->toArray()],
             ],
             $action->toArray()
         );
@@ -161,6 +182,7 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
             ->addClass('customer')
             ->setMethod('POST')
             ->setTitle('Add Customer')
+            ->addField(new Field('first-name'))
             ->build();
 
         assertEquals($action, Action::fromArray($action->toArray()));

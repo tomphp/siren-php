@@ -30,6 +30,11 @@ final class ActionBuilder
     private $title;
 
     /**
+     * @var Field[]
+     */
+    private $fields = [];
+
+    /**
      * @return $this
      */
     public function setName(string $name) : self
@@ -80,6 +85,16 @@ final class ActionBuilder
     }
 
     /**
+     * @return $this
+     */
+    public function addField(Field $field) : self
+    {
+        $this->fields[] = $field;
+
+        return $this;
+    }
+
+    /**
      * @return Action
      */
     public function build() : Action
@@ -89,7 +104,8 @@ final class ActionBuilder
             $this->href,
             $this->classes,
             $this->method,
-            $this->title
+            $this->title,
+            $this->fields
         );
     }
 }
