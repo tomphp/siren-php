@@ -32,7 +32,7 @@ $editAction = Action::builder()
     ->setHref('http://example.com/api/v1/users/ea019642-9c53-415f-88b6-e191dea184f9')
     ->setMethod('PUT')
     ->setType('application/vnd.siren+json')
-    // FIELDS
+    ->addField('email', ['email-class'], 'email', 'test@example.com', 'Email Address')
     ->build();
 
 $user = Entity::builder()
