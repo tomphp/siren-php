@@ -85,11 +85,32 @@ final class ActionBuilder
     }
 
     /**
+     * @param Field|string  $fieldOrName
+     * @param string[]|null $classes
+     * @param string|null   $type
+     * @param mixed         $value
+     * @param string|null   $title
+     *
      * @return $this
      */
-    public function addField(Field $field) : self
-    {
-        $this->fields[] = $field;
+    public function addField(
+        $fieldOrName,
+        $classes = [],
+        string $type = null,
+        $value = null,
+        string $title = null
+    ) : self {
+        if (!$fieldOrName instanceof Field) {
+            $fieldOrName = new Field(
+                $fieldOrName,
+                is_array($classes) ? $classes : [$classes],
+                $type,
+                $value,
+                $title
+            );
+        }
+
+        $this->fields[] = $fieldOrName;
 
         return $this;
     }
