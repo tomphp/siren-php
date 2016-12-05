@@ -99,9 +99,9 @@ final class FieldTest extends \PHPUnit_Framework_TestCase
 
         assertEquals(
             [
-                'name' => 'email-address',
+                'name'  => 'email-address',
                 'class' => ['email-class'],
-                'type' => 'email',
+                'type'  => 'email',
                 'value' => 'someone@example.com',
                 'title' => 'Email',
             ],

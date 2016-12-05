@@ -42,11 +42,11 @@ final class EntityLinkTest extends \PHPUnit_Framework_TestCase
 
         assertEquals(
             [
-                'rel'  => ['example-rel'],
-                'href' => 'http://api.com/example',
+                'rel'   => ['example-rel'],
+                'href'  => 'http://api.com/example',
                 'class' => ['example-class'],
                 'title' => 'Example Title',
-                'type' => 'application/json',
+                'type'  => 'application/json',
             ],
             $link->toArray()
         );

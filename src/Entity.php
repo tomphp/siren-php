@@ -104,12 +104,12 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
         Assertion::allIsInstanceOf($actions, Action::class);
         Assertion::allIsInstanceOf($entities, EntityRepresentation::class);
 
-        $this->classes = array_unique($classes);
+        $this->classes    = array_unique($classes);
         $this->properties = $properties;
-        $this->links = $links;
-        $this->title = $title;
-        $this->actions = $actions;
-        $this->entities = $entities;
+        $this->links      = $links;
+        $this->title      = $title;
+        $this->actions    = $actions;
+        $this->entities   = $entities;
     }
 
     /**
@@ -122,7 +122,7 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
 
     public function hasClass(string $name) : bool
     {
-        return in_array($name, $this->classes);
+        return in_array($name, $this->classes, true);
     }
 
     public function getProperties() : array
@@ -166,7 +166,7 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
             []
         );
 
-        return in_array($rel, $rels);
+        return in_array($rel, $rels, true);
     }
 
     /**

@@ -404,9 +404,9 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
 
         assertEquals(
             [
-                'class' => ['example-class'],
+                'class'      => ['example-class'],
                 'properties' => ['a' => 1, 'b' => 2],
-                'title' => 'Example Title',
+                'title'      => 'Example Title',
             ],
             $entity->toArray()
         );
@@ -471,7 +471,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         $entityLink = new EntityLink(['example-rel'], 'http://api.com/example');
-        $subEntity = Entity::builder()->build();
+        $subEntity  = Entity::builder()->build();
 
         $entity = Entity::builder()
             ->addClass('example-class')

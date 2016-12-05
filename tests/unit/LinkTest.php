@@ -108,7 +108,7 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
 
         assertSame(
             [
-                'rel' => ['self'],
+                'rel'  => ['self'],
                 'href' => 'http://api.com/self',
             ],
             $link->toArray()
@@ -128,11 +128,11 @@ final class LinkTest extends \PHPUnit_Framework_TestCase
 
         assertSame(
             [
-               'rel' => ['self'],
-               'href' => 'http://api.com/self',
+               'rel'   => ['self'],
+               'href'  => 'http://api.com/self',
                'class' => ['product'],
                'title' => 'Product',
-               'type' => 'application/json',
+               'type'  => 'application/json',
             ],
             $link->toArray()
         );

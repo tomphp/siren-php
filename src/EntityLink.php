@@ -57,11 +57,11 @@ final class EntityLink implements EntityRepresentation
         Assertion::allString($rel);
         Assertion::allString($class);
 
-        $this->rel = $rel;
-        $this->href = $href;
+        $this->rel   = $rel;
+        $this->href  = $href;
         $this->class = $class;
         $this->title = $title;
-        $this->type = $type;
+        $this->type  = $type;
     }
 
     public function toArray() : array

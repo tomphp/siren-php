@@ -78,12 +78,12 @@ final class Action
         Assertion::allString($classes);
         Assertion::allIsInstanceOf($fields, Field::class);
 
-        $this->name = $name;
-        $this->href = $href;
+        $this->name    = $name;
+        $this->href    = $href;
         $this->classes = $classes;
-        $this->method = $method;
-        $this->title = $title;
-        $this->fields = $fields;
+        $this->method  = $method;
+        $this->title   = $title;
+        $this->fields  = $fields;
     }
 
     public function getName() : string
@@ -106,7 +106,7 @@ final class Action
 
     public function hasClass(string $name) : bool
     {
-        return in_array($name, $this->classes);
+        return in_array($name, $this->classes, true);
     }
 
     public function getMethod() : string
@@ -127,8 +127,8 @@ final class Action
     public function toArray() : array
     {
         $result = [
-            'name' => $this->name,
-            'href' => $this->href,
+            'name'   => $this->name,
+            'href'   => $this->href,
             'method' => $this->method,
         ];
 

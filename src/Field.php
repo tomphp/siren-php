@@ -58,11 +58,11 @@ final class Field
     ) {
         // assert types
 
-        $this->name = $name;
+        $this->name    = $name;
         $this->classes = $classes;
-        $this->type = $type;
-        $this->value = $value;
-        $this->title = $title;
+        $this->type    = $type;
+        $this->value   = $value;
+        $this->title   = $title;
     }
 
     public function getName() : string

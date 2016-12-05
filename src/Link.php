@@ -59,11 +59,11 @@ final class Link implements LinkInterface
         \Assert\that($rels)->notEmpty()->all()->string();
         \Assert\that($classes)->all()->string();
 
-        $this->rels = $rels;
-        $this->href = $href;
+        $this->rels    = $rels;
+        $this->href    = $href;
         $this->classes = $classes;
-        $this->title = $title;
-        $this->type = $type;
+        $this->title   = $title;
+        $this->type    = $type;
     }
 
     public function getRels() : array
@@ -73,7 +73,7 @@ final class Link implements LinkInterface
 
     public function hasRel(string $rel) : bool
     {
-        return in_array($rel, $this->rels);
+        return in_array($rel, $this->rels, true);
     }
 
     public function getHref() : string
@@ -91,7 +91,7 @@ final class Link implements LinkInterface
 
     public function hasClass(string $class) : bool
     {
-        return in_array($class, $this->classes);
+        return in_array($class, $this->classes, true);
     }
 
     public function getTitle() : string
@@ -117,7 +117,7 @@ final class Link implements LinkInterface
     public function toArray() : array
     {
         $result = [
-            'rel' => $this->rels,
+            'rel'  => $this->rels,
             'href' => $this->href,
         ];
 

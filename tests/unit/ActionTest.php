@@ -127,8 +127,8 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
 
         assertEquals(
             [
-                'name' => 'add-customer',
-                'href' => 'http://api.com/customer',
+                'name'   => 'add-customer',
+                'href'   => 'http://api.com/customer',
                 'method' => 'GET',
             ],
             $action->toArray()
@@ -151,11 +151,11 @@ final class ActionTest extends \PHPUnit_Framework_TestCase
 
         assertEquals(
             [
-                'name' => 'add-customer',
-                'href' => 'http://api.com/customer',
+                'name'   => 'add-customer',
+                'href'   => 'http://api.com/customer',
                 'method' => 'POST',
-                'class' => ['customer'],
-                'title' => 'Add Customer',
+                'class'  => ['customer'],
+                'title'  => 'Add Customer',
                 'fields' => [$field->toArray()],
             ],
             $action->toArray()
