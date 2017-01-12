@@ -264,6 +264,19 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
         ));
     }
 
+    /**
+     * @EntityRepresentation[]
+     */
+    public function getEntitiesByClass(string $name) : array
+    {
+        return array_values(array_filter(
+            $this->entities,
+            function (EntityRepresentation $entity) use ($name) {
+                return $entity->hasClass($name);
+            }
+        ));
+    }
+
     public function toArray() : array
     {
         $result = [];

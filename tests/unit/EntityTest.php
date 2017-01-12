@@ -385,6 +385,20 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function on_getEntitiesByClass()
+    {
+        $customer = Entity::builder()->addClass('customer')->build();
+        $product = Entity::builder()->addClass('product')->build();
+
+        $entity = Entity::builder()
+            ->addSubEntity($customer)
+            ->addSubEntity($product)
+            ->build();
+
+        assertEquals([$product], $entity->getEntitiesByClass('product'));
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array_for_minimal_values()
     {
         $entity = Entity::builder()
