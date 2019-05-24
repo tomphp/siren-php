@@ -21,11 +21,6 @@ final class Link implements LinkInterface
     /**
      * @var string
      */
-    private $title;
-
-    /**
-     * @var string
-     */
     private $type;
 
     public static function fromArray(array $array)
@@ -76,11 +71,6 @@ final class Link implements LinkInterface
     public function getHref() : string
     {
         return $this->href;
-    }
-
-    public function getTitle() : string
-    {
-        return $this->title;
     }
 
     public function getType() : string

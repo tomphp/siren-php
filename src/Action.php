@@ -24,11 +24,6 @@ final class Action
     private $method;
 
     /**
-     * @var string
-     */
-    private $title;
-
-    /**
      * @var Field[]
      */
     private $fields;
@@ -96,11 +91,6 @@ final class Action
     public function getMethod() : string
     {
         return $this->method;
-    }
-
-    public function getTitle() : string
-    {
-        return $this->title;
     }
 
     public function getFields() : array

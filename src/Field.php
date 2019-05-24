@@ -4,15 +4,12 @@ namespace TomPHP\Siren;
 
 final class Field
 {
+    use SirenObject;
+
     /**
      * @var string
      */
     private $name;
-
-    /**
-     * @var string[]
-     */
-    private $classes;
 
     /**
      * @var string
@@ -26,11 +23,6 @@ final class Field
      * @var mixed
      */
     private $value;
-
-    /**
-     * @var string
-     */
-    private $title;
 
     public static function fromArray(array $array) : self
     {
@@ -71,14 +63,6 @@ final class Field
     }
 
     /**
-     * @return string[]
-     */
-    public function getClasses() : array
-    {
-        return $this->classes;
-    }
-
-    /**
      * @return string|null
      */
     public function getType()
@@ -92,14 +76,6 @@ final class Field
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     public function toArray() : array

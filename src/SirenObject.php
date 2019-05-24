@@ -9,6 +9,11 @@ trait SirenObject {
     private $classes;
 
     /**
+     * @var string
+     */
+    private $title;
+
+    /**
      * @return string[]
      */
     public function getClasses() : array
@@ -19,5 +24,10 @@ trait SirenObject {
     public function hasClass(string $name) : bool
     {
         return in_array($name, $this->classes, true);
+    }
+
+    public function getTitle() : ?string
+    {
+        return $this->title;
     }
 }

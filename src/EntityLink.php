@@ -22,11 +22,6 @@ final class EntityLink implements EntityRepresentation
     /**
      * @var string
      */
-    private $title;
-
-    /**
-     * @var string
-     */
     private $type;
 
     /**

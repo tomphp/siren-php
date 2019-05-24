@@ -21,11 +21,6 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
     private $links;
 
     /**
-     * @var string
-     */
-    private $title;
-
-    /**
      * @var Action[]
      */
     private $actions;
@@ -183,11 +178,6 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
                 }
             )
         );
-    }
-
-    public function getTitle() : string
-    {
-        return $this->title;
     }
 
     /**
