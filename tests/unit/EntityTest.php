@@ -400,6 +400,20 @@ final class EntityTest extends TestCase
     }
 
     /** @test */
+    public function on_getEntitiesByClass_supports_EntityLink()
+    {
+        $customer = new EntityLink(['example-rel'], 'http://api.com/example', ['customer']);
+        $product = new EntityLink(['example-rel'], 'http://api.com/example', ['product']);
+
+        $entity = Entity::builder()
+            ->addSubEntity($customer)
+            ->addSubEntity($product)
+            ->build();
+
+        assertEquals([$product], $entity->getEntitiesByClass('product'));
+    }
+
+    /** @test */
     public function on_toArray_it_converts_to_an_array_for_minimal_values()
     {
         $entity = Entity::builder()

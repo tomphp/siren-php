@@ -8,10 +8,7 @@ use TomPHP\Siren\Exception\NotFound;
 
 final class Entity implements LinkProviderInterface, EntityRepresentation
 {
-    /**
-     * @var string[]
-     */
-    private $classes;
+    use SirenObject;
 
     /**
      * @var array
@@ -110,19 +107,6 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
         $this->title      = $title;
         $this->actions    = $actions;
         $this->entities   = $entities;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getClasses() : array
-    {
-        return $this->classes;
-    }
-
-    public function hasClass(string $name) : bool
-    {
-        return in_array($name, $this->classes, true);
     }
 
     public function getProperties() : array

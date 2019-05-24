@@ -6,6 +6,8 @@ use Assert\Assertion;
 
 final class Action
 {
+    use SirenObject;
+
     /**
      * @var string
      */
@@ -15,11 +17,6 @@ final class Action
      * @var string
      */
     private $href;
-
-    /**
-     * @var string[]
-     */
-    private $classes;
 
     /**
      * @var string
@@ -94,19 +91,6 @@ final class Action
     public function getHref() : string
     {
         return $this->href;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getClasses() : array
-    {
-        return $this->classes;
-    }
-
-    public function hasClass(string $name) : bool
-    {
-        return in_array($name, $this->classes, true);
     }
 
     public function getMethod() : string

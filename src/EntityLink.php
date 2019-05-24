@@ -6,6 +6,9 @@ use Assert\Assertion;
 
 final class EntityLink implements EntityRepresentation
 {
+
+    use SirenObject;
+
     /**
      * @var array
      */
@@ -15,11 +18,6 @@ final class EntityLink implements EntityRepresentation
      * @var string
      */
     private $href;
-
-    /**
-     * @var array
-     */
-    private $class;
 
     /**
      * @var string
@@ -52,16 +50,16 @@ final class EntityLink implements EntityRepresentation
      * @param string   $title
      * @param string   $type
      */
-    public function __construct(array $rel, string $href, array $class = [], string $title = null, string $type = null)
+    public function __construct(array $rel, string $href, array $classes = [], string $title = null, string $type = null)
     {
         Assertion::allString($rel);
-        Assertion::allString($class);
+        Assertion::allString($classes);
 
-        $this->rel   = $rel;
-        $this->href  = $href;
-        $this->class = $class;
-        $this->title = $title;
-        $this->type  = $type;
+        $this->rel     = $rel;
+        $this->href    = $href;
+        $this->classes = $classes;
+        $this->title   = $title;
+        $this->type    = $type;
     }
 
     public function toArray() : array
@@ -71,8 +69,8 @@ final class EntityLink implements EntityRepresentation
             'href' => $this->href,
         ];
 
-        if (count($this->class)) {
-            $result['class'] = $this->class;
+        if (count($this->classes)) {
+            $result['class'] = $this->classes;
         }
 
         if (!is_null($this->title)) {

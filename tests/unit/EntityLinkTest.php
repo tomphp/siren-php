@@ -74,4 +74,11 @@ final class EntityLinkTest extends TestCase
 
         assertEquals($link, EntityLink::fromArray($link->toArray()));
     }
+
+    /** @test */
+    public function on_hasClass_it_returns_true_if_present()
+    {
+        $link = new EntityLink(['example-rel'], 'http://api.com/example', ["https://schema.org/Person"]);
+        assertTrue($link->hasClass("https://schema.org/Person"));
+    }
 }
