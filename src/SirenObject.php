@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TomPHP\Siren;
 
@@ -6,12 +6,12 @@ trait SirenObject {
     /**
      * @var string[]
      */
-    private $classes;
+    protected $classes;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @return string[]

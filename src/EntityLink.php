@@ -4,15 +4,10 @@ namespace TomPHP\Siren;
 
 use Assert\Assertion;
 
-final class EntityLink implements EntityRepresentation
+final class EntityLink implements EntityRepresentation, SubEntityRepresentation
 {
-
     use SirenObject;
-
-    /**
-     * @var array
-     */
-    private $rel;
+    use HasRels;
 
     /**
      * @var string
@@ -39,18 +34,18 @@ final class EntityLink implements EntityRepresentation
     }
 
     /**
-     * @param string[] $rel
+     * @param string[] $rels
      * @param string   $href
      * @param string[] $class
      * @param string   $title
      * @param string   $type
      */
-    public function __construct(array $rel, string $href, array $classes = [], string $title = null, string $type = null)
+    public function __construct(array $rels, string $href, array $classes = [], string $title = null, string $type = null)
     {
-        Assertion::allString($rel);
+        Assertion::allString($rels);
         Assertion::allString($classes);
 
-        $this->rel     = $rel;
+        $this->rels    = $rels;
         $this->href    = $href;
         $this->classes = $classes;
         $this->title   = $title;
@@ -60,7 +55,7 @@ final class EntityLink implements EntityRepresentation
     public function toArray() : array
     {
         $result = [
-            'rel'  => $this->rel,
+            'rel'  => $this->rels,
             'href' => $this->href,
         ];
 

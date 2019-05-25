@@ -6,33 +6,57 @@ use Assert\Assertion;
 use Psr\Link\LinkProviderInterface;
 use TomPHP\Siren\Exception\NotFound;
 
-final class Entity implements LinkProviderInterface, EntityRepresentation
+class Entity implements LinkProviderInterface, EntityRepresentation
 {
     use SirenObject;
 
     /**
      * @var array
      */
-    private $properties;
+    protected $properties;
 
     /**
      * @var Link[]
      */
-    private $links;
+    protected $links;
 
     /**
      * @var Action[]
      */
-    private $actions;
+    protected $actions;
 
     /**
-     * @var EntityLink[]
+     * @var SubEntityRepresentation[]
      */
-    private $entities;
+    protected $entities;
 
     public static function builder() : EntityBuilder
     {
         return new EntityBuilder();
+    }
+
+    protected static function parseNestedObjects(array &$array)
+    {
+        if (isset($array['links'])) {
+            $array['links'] = array_map([Link::class, 'fromArray'], $array['links']);
+        }
+
+        if (isset($array['actions'])) {
+            $array['actions'] = array_map([Action::class, 'fromArray'], $array['actions']);
+        }
+
+        if (isset($array['entities'])) {
+            $array['entities'] = array_map(
+                function (array $entity) {
+                    if (array_key_exists('href', $entity)) {
+                        return EntityLink::fromArray($entity);
+                    }
+                    return SubEntity::fromArray($entity);
+                },
+                $array['entities']
+            );
+        }
+
     }
 
     /**
@@ -40,46 +64,24 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
      */
     public static function fromArray(array $array) : EntityRepresentation
     {
-        $links = [];
-        if (isset($array['links'])) {
-            $links = array_map([Link::class, 'fromArray'], $array['links']);
-        }
-
-        $actions = [];
-        if (isset($array['actions'])) {
-            $actions = array_map([Action::class, 'fromArray'], $array['actions']);
-        }
-
-        $entities = [];
-        if (isset($array['entities'])) {
-            $entities = array_map(
-                function (array $entity) {
-                    if (array_key_exists('href', $entity)) {
-                        return EntityLink::fromArray($entity);
-                    }
-                    return self::fromArray($entity);
-                },
-                $array['entities']
-            );
-        }
-
+        self::parseNestedObjects($array);
         return new self(
             $array['class'] ?? [],
             $array['properties'] ?? [],
-            $links,
+            $array['links'] ?? [],
             $array['title'] ?? null,
-            $actions,
-            $entities
+            $array['actions'] ?? [],
+            $array['entities'] ?? []
         );
     }
 
     /**
-     * @param string[]               $classes
-     * @param array                  $properties
-     * @param Link[]                 $links
-     * @param string                 $title
-     * @param Action[]               $actions
-     * @param EntityRepresentation[] $entities
+     * @param string[]    $classes
+     * @param array       $properties
+     * @param Link[]      $links
+     * @param string      $title
+     * @param Action[]    $actions
+     * @param SubEntity[] $entities
      *
      * @internal
      */
@@ -94,7 +96,7 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
         Assertion::allString($classes);
         Assertion::allIsInstanceOf($links, Link::class);
         Assertion::allIsInstanceOf($actions, Action::class);
-        Assertion::allIsInstanceOf($entities, EntityRepresentation::class);
+        Assertion::allIsInstanceOf($entities, SubEntityRepresentation::class);
 
         $this->classes    = array_unique($classes);
         $this->properties = $properties;
@@ -214,7 +216,7 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
     }
 
     /**
-     * @return EntityRepresentation[]
+     * @return SubEntityRepresentation[]
      */
     public function getEntities() : array
     {
@@ -222,13 +224,13 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
     }
 
     /**
-     * @EntityRepresentation[]
+     * @SubEntityRepresentation[]
      */
     public function getEntitiesByProperty(string $name, $value) : array
     {
         return array_values(array_filter(
             $this->entities,
-            function (EntityRepresentation $entity) use ($name, $value) {
+            function (SubEntityRepresentation $entity) use ($name, $value) {
                 try {
                     return $entity->getProperty($name) === $value;
                 } catch (NotFound $e) {
@@ -239,14 +241,27 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
     }
 
     /**
-     * @EntityRepresentation[]
+     * @SubEntityRepresentation[]
      */
     public function getEntitiesByClass(string $name) : array
     {
         return array_values(array_filter(
             $this->entities,
-            function (EntityRepresentation $entity) use ($name) {
+            function ($entity) use ($name) {
                 return $entity->hasClass($name);
+            }
+        ));
+    }
+
+    /**
+     * @SubEntityRepresentation[]
+     */
+    public function getEntitiesByRel(string $rel) : array
+    {
+        return array_values(array_filter(
+            $this->entities,
+            function ($entity) use ($rel) {
+                return $entity->hasRel($rel);
             }
         ));
     }
