@@ -65,7 +65,7 @@ final class Entity implements LinkProviderInterface, EntityRepresentation
                     if (array_key_exists('href', $entity)) {
                         return EntityLink::fromArray($entity);
                     }
-                    return Entity::fromArray($entity);
+                    return self::fromArray($entity);
                 },
                 $array['entities']
             );
