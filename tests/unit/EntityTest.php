@@ -388,7 +388,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
     public function on_getEntitiesByClass()
     {
         $customer = Entity::builder()->addClass('customer')->build();
-        $product = Entity::builder()->addClass('product')->build();
+        $product  = Entity::builder()->addClass('product')->build();
 
         $entity = Entity::builder()
             ->addSubEntity($customer)
