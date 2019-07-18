@@ -2,10 +2,11 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Link\LinkInterface;
 use TomPHP\Siren\Link;
 
-final class LinkTest extends \PHPUnit_Framework_TestCase
+final class LinkTest extends TestCase
 {
     /** @test */
     public function it_is_a_PSR13_link()

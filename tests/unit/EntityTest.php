@@ -2,6 +2,7 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Link\LinkProviderInterface;
 use TomPHP\Siren\Action;
 use TomPHP\Siren\Entity;
@@ -10,7 +11,7 @@ use TomPHP\Siren\EntityRepresentation;
 use TomPHP\Siren\Exception\NotFound;
 use TomPHP\Siren\Link;
 
-final class EntityTest extends \PHPUnit_Framework_TestCase
+final class EntityTest extends TestCase
 {
     /** @test */
     public function it_is_an_entity_representation()
@@ -326,7 +327,7 @@ final class EntityTest extends \PHPUnit_Framework_TestCase
         $entity = Entity::builder()
             ->build();
 
-        $this->setExpectedException(
+        $this->expectException(
             NotFound::class,
             'Action "add-customer" was not found.',
             NotFound::ACTION

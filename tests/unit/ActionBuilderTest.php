@@ -2,10 +2,11 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use PHPUnit\Framework\TestCase;
 use TomPHP\Siren\Action;
 use TomPHP\Siren\Field;
 
-final class ActionBuilderTest extends \PHPUnit_Framework_TestCase
+final class ActionBuilderTest extends TestCase
 {
     /** @test */
     public function on_addField_it_accepts_an_Field_object()

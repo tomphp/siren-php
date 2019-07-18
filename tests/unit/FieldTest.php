@@ -2,9 +2,10 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use PHPUnit\Framework\TestCase;
 use TomPHP\Siren\Field;
 
-final class FieldTest extends \PHPUnit_Framework_TestCase
+final class FieldTest extends TestCase
 {
     /** @test */
     public function on_getName_it_returns_the_name()

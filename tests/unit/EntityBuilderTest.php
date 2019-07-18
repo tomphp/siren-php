@@ -2,10 +2,11 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use PHPUnit\Framework\TestCase;
 use TomPHP\Siren\Entity;
 use TomPHP\Siren\Link;
 
-final class EntityBuilderTest extends \PHPUnit_Framework_TestCase
+final class EntityBuilderTest extends TestCase
 {
     /** @test */
     public function on_addProperies_it_extends_current_properties()

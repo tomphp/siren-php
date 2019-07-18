@@ -2,10 +2,11 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use PHPUnit\Framework\TestCase;
 use TomPHP\Siren\EntityLink;
 use TomPHP\Siren\EntityRepresentation;
 
-final class EntityLinkTest extends \PHPUnit_Framework_TestCase
+final class EntityLinkTest extends TestCase
 {
     /** @test */
     public function it_is_an_entity_representation()

@@ -2,10 +2,11 @@
 
 namespace tests\unit\TomPHP\Siren;
 
+use PHPUnit\Framework\TestCase;
 use TomPHP\Siren\Action;
 use TomPHP\Siren\Field;
 
-final class ActionTest extends \PHPUnit_Framework_TestCase
+final class ActionTest extends TestCase
 {
     /** @test */
     public function on_getName_it_returns_the_name()

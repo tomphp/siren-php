@@ -2,10 +2,11 @@
 
 namespace tests\unit\TomPHP\Siren\Exception;
 
+use PHPUnit\Framework\TestCase;
 use TomPHP\Siren\Exception\Exception;
 use TomPHP\Siren\Exception\NotFound;
 
-final class NotFoundTest extends \PHPUnit_Framework_TestCase
+final class NotFoundTest extends TestCase
 {
     /** @test */
     public function it_is_a_package_exception()
