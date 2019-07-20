@@ -2,9 +2,7 @@
 
 namespace TomPHP\Siren;
 
-use Assert\Assertion;
-
-# Just like a normal entity, but an embedded sub-entity will have rels, too
+// Just like a normal entity, but an embedded sub-entity will have rels, too
 final class SubEntity extends Entity implements SubEntityRepresentation
 {
     use HasRels;
@@ -13,7 +11,7 @@ final class SubEntity extends Entity implements SubEntityRepresentation
     {
         Entity::parseNestedObjects($array);
 
-        return new SubEntity(
+        return new self(
             $array['rel'],
             $array['class'] ?? [],
             $array['properties'] ?? [],
@@ -26,7 +24,7 @@ final class SubEntity extends Entity implements SubEntityRepresentation
 
     public function toArray() : array
     {
-        $result = parent::toArray();
+        $result        = parent::toArray();
         $result['rel'] = $this->rels;
         return $result;
     }

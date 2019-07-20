@@ -56,7 +56,6 @@ class Entity implements LinkProviderInterface, EntityRepresentation
                 $array['entities']
             );
         }
-
     }
 
     /**

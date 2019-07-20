@@ -2,7 +2,8 @@
 
 namespace TomPHP\Siren;
 
-trait SirenObject {
+trait SirenObject
+{
     /**
      * @var string[]
      */

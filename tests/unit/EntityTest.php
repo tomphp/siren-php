@@ -357,7 +357,7 @@ final class EntityTest extends TestCase
     /** @test */
     public function on_getEntities_it_can_return_real_entities()
     {
-        $subEntity = Entity::builder()->buildSubEntity(["person"]);
+        $subEntity = Entity::builder()->buildSubEntity(['person']);
 
         $entity = Entity::builder()
             ->addSubEntity($subEntity)
@@ -388,8 +388,8 @@ final class EntityTest extends TestCase
     /** @test */
     public function on_getEntitiesByClass()
     {
-        $customer = Entity::builder()->addClass('customer')->buildSubEntity(["rel"]);
-        $product = Entity::builder()->addClass('product')->buildSubEntity(["rel"]);
+        $customer = Entity::builder()->addClass('customer')->buildSubEntity(['rel']);
+        $product  = Entity::builder()->addClass('product')->buildSubEntity(['rel']);
 
         $entity = Entity::builder()
             ->addSubEntity($customer)
@@ -403,7 +403,7 @@ final class EntityTest extends TestCase
     /** @test */
     public function on_getEntitiesByRel()
     {
-        $son = Entity::builder()->addClass('http://schema.org/Person')->buildSubEntity(['children']);
+        $son     = Entity::builder()->addClass('http://schema.org/Person')->buildSubEntity(['children']);
         $address = Entity::builder()->addClass('http://schema.org/PostalAddress')->buildSubEntity(['postalAddress']);
 
         $entity = Entity::builder()
@@ -418,7 +418,7 @@ final class EntityTest extends TestCase
     public function on_getEntitiesByClass_supports_EntityLink()
     {
         $customer = new EntityLink(['example-rel'], 'http://api.com/example', ['customer']);
-        $product = new EntityLink(['example-rel'], 'http://api.com/example', ['product']);
+        $product  = new EntityLink(['example-rel'], 'http://api.com/example', ['product']);
 
         $entity = Entity::builder()
             ->addSubEntity($customer)
@@ -527,7 +527,7 @@ final class EntityTest extends TestCase
             ->addSubEntity($subEntity)
             ->build();
 
-        $array = $entity->toArray();
+        $array  = $entity->toArray();
         $parsed = Entity::fromArray($array);
         assertEquals($entity, $parsed);
     }

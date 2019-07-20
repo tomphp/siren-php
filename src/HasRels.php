@@ -2,9 +2,9 @@
 
 namespace TomPHP\Siren;
 
-# Both Links and (Sub-)Entities have a $rel array.
-# Defines the relationship of the sub-entity to its parent, per Web Linking (RFC5988) and Link Relations.
-# MUST be a non-empty array of strings. Required.
+// Both Links and (Sub-)Entities have a $rel array.
+// Defines the relationship of the sub-entity to its parent, per Web Linking (RFC5988) and Link Relations.
+// MUST be a non-empty array of strings. Required.
 trait HasRels
 {
     /**
