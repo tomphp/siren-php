@@ -6,6 +6,8 @@ use Assert\Assertion;
 
 final class Action
 {
+    use SirenObject;
+
     /**
      * @var string
      */
@@ -17,19 +19,9 @@ final class Action
     private $href;
 
     /**
-     * @var string[]
-     */
-    private $classes;
-
-    /**
      * @var string
      */
     private $method;
-
-    /**
-     * @var string
-     */
-    private $title;
 
     /**
      * @var Field[]
@@ -96,27 +88,9 @@ final class Action
         return $this->href;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getClasses() : array
-    {
-        return $this->classes;
-    }
-
-    public function hasClass(string $name) : bool
-    {
-        return in_array($name, $this->classes, true);
-    }
-
     public function getMethod() : string
     {
         return $this->method;
-    }
-
-    public function getTitle() : string
-    {
-        return $this->title;
     }
 
     public function getFields() : array

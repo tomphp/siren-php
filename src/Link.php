@@ -6,25 +6,13 @@ use Psr\Link\LinkInterface;
 
 final class Link implements LinkInterface
 {
-    /**
-     * @var string[]
-     */
-    private $rels;
+    use SirenObject;
+    use HasRels;
 
     /**
      * @var string
      */
     private $href;
-
-    /**
-     * @var string[]
-     */
-    private $classes;
-
-    /**
-     * @var string
-     */
-    private $title;
 
     /**
      * @var string
@@ -66,37 +54,9 @@ final class Link implements LinkInterface
         $this->type    = $type;
     }
 
-    public function getRels() : array
-    {
-        return $this->rels;
-    }
-
-    public function hasRel(string $rel) : bool
-    {
-        return in_array($rel, $this->rels, true);
-    }
-
     public function getHref() : string
     {
         return $this->href;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getClasses() : array
-    {
-        return $this->classes;
-    }
-
-    public function hasClass(string $class) : bool
-    {
-        return in_array($class, $this->classes, true);
-    }
-
-    public function getTitle() : string
-    {
-        return $this->title;
     }
 
     public function getType() : string

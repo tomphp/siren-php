@@ -357,7 +357,7 @@ final class EntityTest extends TestCase
     /** @test */
     public function on_getEntities_it_can_return_real_entities()
     {
-        $subEntity = Entity::builder()->build();
+        $subEntity = Entity::builder()->buildSubEntity(['person']);
 
         $entity = Entity::builder()
             ->addSubEntity($subEntity)
@@ -371,11 +371,11 @@ final class EntityTest extends TestCase
     {
         $tom = Entity::builder()
             ->addProperty('name', 'Tom')
-            ->build();
+            ->buildSubEntity(['participant']);
 
         $jerry = Entity::builder()
             ->addProperty('name', 'jerry')
-            ->build();
+            ->buildSubEntity(['participant']);
 
         $entity = Entity::builder()
             ->addSubEntity($tom)
@@ -388,8 +388,37 @@ final class EntityTest extends TestCase
     /** @test */
     public function on_getEntitiesByClass()
     {
-        $customer = Entity::builder()->addClass('customer')->build();
-        $product  = Entity::builder()->addClass('product')->build();
+        $customer = Entity::builder()->addClass('customer')->buildSubEntity(['rel']);
+        $product  = Entity::builder()->addClass('product')->buildSubEntity(['rel']);
+
+        $entity = Entity::builder()
+            ->addSubEntity($customer)
+            ->addSubEntity($product)
+            ->build();
+
+        $entities = $entity->getEntitiesByClass('product');
+        assertEquals([$product], $entities);
+    }
+
+    /** @test */
+    public function on_getEntitiesByRel()
+    {
+        $son     = Entity::builder()->addClass('http://schema.org/Person')->buildSubEntity(['children']);
+        $address = Entity::builder()->addClass('http://schema.org/PostalAddress')->buildSubEntity(['postalAddress']);
+
+        $entity = Entity::builder()
+            ->addSubEntity($son)
+            ->addSubEntity($address)
+            ->build();
+
+        assertEquals([$address], $entity->getEntitiesByRel('postalAddress'));
+    }
+
+    /** @test */
+    public function on_getEntitiesByClass_supports_EntityLink()
+    {
+        $customer = new EntityLink(['example-rel'], 'http://api.com/example', ['customer']);
+        $product  = new EntityLink(['example-rel'], 'http://api.com/example', ['product']);
 
         $entity = Entity::builder()
             ->addSubEntity($customer)
@@ -481,12 +510,12 @@ final class EntityTest extends TestCase
     {
         $action = Action::builder()
             ->setName('add-customer')
-            ->setHref('http://api.com/cusotmer')
+            ->setHref('http://api.com/customer')
             ->setMethod('POST')
             ->build();
 
         $entityLink = new EntityLink(['example-rel'], 'http://api.com/example');
-        $subEntity  = Entity::builder()->build();
+        $subEntity  = Entity::builder()->buildSubEntity(['example-rel']);
 
         $entity = Entity::builder()
             ->addClass('example-class')
@@ -498,7 +527,9 @@ final class EntityTest extends TestCase
             ->addSubEntity($subEntity)
             ->build();
 
-        assertEquals($entity, Entity::fromArray($entity->toArray()));
+        $array  = $entity->toArray();
+        $parsed = Entity::fromArray($array);
+        assertEquals($entity, $parsed);
     }
 
     /** @test */

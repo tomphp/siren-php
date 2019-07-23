@@ -2,6 +2,8 @@
 
 namespace TomPHP\Siren;
 
+use Assert\Assertion;
+
 final class EntityBuilder
 {
     /**
@@ -119,7 +121,7 @@ final class EntityBuilder
     /**
      * @return $this
      */
-    public function addSubEntity(EntityRepresentation $entity) : self
+    public function addSubEntity(SubEntityRepresentation $entity) : self
     {
         $this->subEntities[] = $entity;
 
@@ -129,6 +131,20 @@ final class EntityBuilder
     public function build() : Entity
     {
         return new Entity(
+            $this->classes,
+            $this->properties,
+            $this->links,
+            $this->title,
+            $this->actions,
+            $this->subEntities
+        );
+    }
+
+    public function buildSubEntity(array $rels) : SubEntity
+    {
+        Assertion::allString($rels);
+        return new SubEntity(
+            $rels,
             $this->classes,
             $this->properties,
             $this->links,
